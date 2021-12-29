@@ -2,12 +2,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RadarLite.Database.Models;
 using RadarLite.Identity.EndPoints;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using RadarLite.Identity.Data;
+using RadarLite.Database.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
+
+builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection")));
+builder.Services.AddDbContext<RadarLiteContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteContextConnection")));
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    //.AddEntityFrameworkStores<RadarLiteIdentityContext>();// Add services to the container.
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -54,10 +65,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 //Not sure if the database info should live in the API app settings.
-builder.Services.AddDbContext<RadarLiteContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteContext")));
 
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Logging.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSeq());
 
@@ -73,6 +81,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

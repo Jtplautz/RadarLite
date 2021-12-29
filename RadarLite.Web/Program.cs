@@ -1,11 +1,4 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using RadarLite.Web.Data;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection");
-builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
-    options.UseSqlServer(connectionString));builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<RadarLiteIdentityContext>();
 
 builder.Logging.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSeq());
@@ -29,8 +22,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();
-app.UseAuthorization();
 
 //app.MapRazorPages();
 
