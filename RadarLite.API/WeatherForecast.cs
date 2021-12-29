@@ -1,4 +1,4 @@
-namespace RadarLite.API;
+namespace RadarLite.Identity;
 
 public class WeatherForecast
 {

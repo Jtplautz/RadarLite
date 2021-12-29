@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-namespace RadarLite.API.Controllers;
+using RadarLite.Identity;
+
+namespace RadarLite.Identity.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -20,6 +22,16 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
+        //Seq testing -- formatting example
+        _logger.LogInformation("Getting forecast.");
+
+        Random rng = new Random();
+
+        if (rng.Next(10) < 5)
+        {
+            _logger.LogWarning("Forecast not found.");
+        }
+
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateTime.Now.AddDays(index),

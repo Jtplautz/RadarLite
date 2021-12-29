@@ -1,12 +1,22 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using RadarLite.Web.Data;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection");
+builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
+    options.UseSqlServer(connectionString));builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<RadarLiteIdentityContext>();
 
-
+builder.Logging.Services.AddLogging(loggingBuilder =>
+    loggingBuilder.AddSeq());
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 builder.WebHost.UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));
+app.Logger.LogInformation("RadarLite.Web Started.");
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -19,9 +29,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
+//app.MapRazorPages();
 
 app.Run();
