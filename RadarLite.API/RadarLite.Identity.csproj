@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -33,7 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RadarLite.Buisness\RadarLite.Buisness.csproj" />
     <ProjectReference Include="..\RadarLite.Database\RadarLite.Database.csproj" />
+    <ProjectReference Include="..\RadarLite.Interfaces\RadarLite.Interfaces.csproj" />
     <ProjectReference Include="..\RadarLite.Logging\RadarLite.Logging.csproj" />
   </ItemGroup>
 

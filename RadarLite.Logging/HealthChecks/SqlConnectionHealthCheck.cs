@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Data.Common;
 using System.Data.SqlClient;
+//https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/monitor-app-health
 
 namespace RadarLite.Logging.HealthChecks;
 public class SqlConnectionHealthCheck : IHealthCheck

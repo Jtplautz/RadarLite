@@ -21,7 +21,7 @@ builder.Services.AddDbContext<RadarLiteContext>(options =>
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<RadarLiteIdentityContext>();// Add services to the container.
 
-
+builder.Services.AddUserServices();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
