@@ -6,6 +6,7 @@ using RadarLite.Identity.EndPoints;
 using System.Text;
 using RadarLite.Database.Models;
 using RadarLite.Identity.Areas.Identity.Data;
+using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -68,8 +69,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 //Not sure if the database info should live in the API app settings.
 
-builder.Logging.Services.AddLogging(loggingBuilder =>
-    loggingBuilder.AddSeq());
+builder.Host.UseSerilog((ctx, lc) => lc
+        .ReadFrom.Configuration(ctx.Configuration)
+        .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
 
 
 var app = builder.Build();

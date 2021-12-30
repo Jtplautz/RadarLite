@@ -1,14 +1,15 @@
+using Serilog;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.Services.AddLogging(loggingBuilder =>
-    loggingBuilder.AddSeq());
-
 // Add services to the container.
-//builder.Services.AddRazorPages();
+builder.Host.UseSerilog((ctx, lc) => lc
+        .ReadFrom.Configuration(ctx.Configuration)
+        .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
+
+builder.WebHost.UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));
 
 var app = builder.Build();
-builder.WebHost.UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));
-app.Logger.LogInformation("RadarLite.Web Started.");
+app.Logger.LogWarning("RadarLite.Web Started.");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -20,9 +21,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-//app.MapRazorPages();
 
 app.Run();
