@@ -4,7 +4,7 @@ builder.Logging.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSeq());
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+//builder.Services.AddRazorPages();
 
 var app = builder.Build();
 builder.WebHost.UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));

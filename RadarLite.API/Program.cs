@@ -4,9 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RadarLite.Identity.EndPoints;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
-using RadarLite.Identity.Data;
 using RadarLite.Database.Models;
+using RadarLite.Identity.Areas.Identity.Data;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +14,10 @@ builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
 builder.Services.AddDbContext<RadarLiteContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteContextConnection")));
 
+
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    //.AddEntityFrameworkStores<RadarLiteIdentityContext>();// Add services to the container.
+//    .AddEntityFrameworkStores<RadarLiteIdentityContext>();// Add services to the container.
+
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllers();
@@ -50,6 +51,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+//In order to fully get this to work, we need to rely on an IIS cert. Need more info on how to set it up.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
