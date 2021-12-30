@@ -1,4 +1,5 @@
 ﻿using RadarLite.Buisness.Services.User;
+using RadarLite.Identity.Areas.Identity.Data;
 using RadarLite.Interfaces.User;
 
 namespace RadarLite.Identity.EndPoints;
@@ -18,7 +19,7 @@ public static class LoginEndpoints
         service.AddHttpClient<IUserConfigService, UserConfigurationService>();
     }
 
-    internal static IResult GetAllUsers(IUserConfigService service)
+    internal static IResult GetAllUsers(IUserConfigService service, RadarLiteIdentityContext context)
     {
         var users = service.GetAllUsersAsync();//.Result.Users;
 
@@ -30,6 +31,12 @@ public static class LoginEndpoints
         var user = service.GetUserByIdAsync(id);//.Result.Users.SingleOrDefault();
 
         return user is not null ? Results.Ok(user) : Results.NotFound();
+    }
+    internal static IResult CreateUser(IUserConfigService service)
+    {
+        service.CreateUser();
+
+        return Results.Ok();
     }
 }
 

@@ -79,7 +79,9 @@ builder.Services.AddHealthChecks().AddCheck("RadarLiteDB-check",
             new SqlConnectionHealthCheck(builder.Configuration.GetConnectionString("RadarLiteContextConnection")),
             HealthStatus.Unhealthy,
             new string[] { "RadarLitedb" });
+
 var app = builder.Build();
+
 app.Logger.LogInformation("RadarLite.API Started.");
 app.MapUsersEndpoints();
 
