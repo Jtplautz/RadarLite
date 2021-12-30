@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RadarLite.Database\RadarLite.Database.csproj" />
+    <ProjectReference Include="..\RadarLite.Logging\RadarLite.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>

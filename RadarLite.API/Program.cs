@@ -7,6 +7,8 @@ using System.Text;
 using RadarLite.Database.Models;
 using RadarLite.Identity.Areas.Identity.Data;
 using Serilog;
+using RadarLite.Logging.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -73,7 +75,10 @@ builder.Host.UseSerilog((ctx, lc) => lc
         .ReadFrom.Configuration(ctx.Configuration)
         .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
 
-
+builder.Services.AddHealthChecks().AddCheck("RadarLiteDB-check",
+            new SqlConnectionHealthCheck(builder.Configuration.GetConnectionString("RadarLiteContextConnection")),
+            HealthStatus.Unhealthy,
+            new string[] { "RadarLitedb" });
 var app = builder.Build();
 app.Logger.LogInformation("RadarLite.API Started.");
 app.MapUsersEndpoints();
@@ -87,7 +92,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseHealthChecks("/hc");
 app.MapControllers();
 
 app.Run();

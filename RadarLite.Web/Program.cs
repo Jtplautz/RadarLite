@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using RadarLite.Logging.HealthChecks;
 using Serilog;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
         .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
 
 builder.WebHost.UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));
+
 
 var app = builder.Build();
 app.Logger.LogWarning("RadarLite.Web Started.");
