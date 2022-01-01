@@ -23,17 +23,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{573E7F08-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B0C03054-02B3-4A94-A35F-EE25E1AC4AC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.DomainExceptions", "RadarLite.DomainExceptions\RadarLite.DomainExceptions.csproj", "{BC8E08A3-27EB-4D6B-9993-8623CC2CE07E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.DomainExceptions", "RadarLite.DomainExceptions\RadarLite.DomainExceptions.csproj", "{BC8E08A3-27EB-4D6B-9993-8623CC2CE07E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.Interfaces", "RadarLite.Interfaces\RadarLite.Interfaces.csproj", "{73342BE0-FED4-4295-A605-4BD6BF186467}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.Interfaces", "RadarLite.Interfaces\RadarLite.Interfaces.csproj", "{73342BE0-FED4-4295-A605-4BD6BF186467}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.Aggregates", "RadarLite.Aggregates\RadarLite.Aggregates.csproj", "{D8C519D9-7D0E-40CE-A3F6-C6E81D93B1A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.Aggregates", "RadarLite.Aggregates\RadarLite.Aggregates.csproj", "{D8C519D9-7D0E-40CE-A3F6-C6E81D93B1A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F8273E47-8176-46F5-9689-C63B7269454C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Kernel", "Shared Kernel", "{836106B0-9530-4CE7-A08C-81CC9D22951F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{00A4AFFF-95B0-47F3-8A55-EA0B139870D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.NationalWeatherService", "RadarLite.NationalWeatherService\RadarLite.NationalWeatherService.csproj", "{38D33F7E-583C-4F8F-B26D-6757F0FD9296}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{D8C519D9-7D0E-40CE-A3F6-C6E81D93B1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8C519D9-7D0E-40CE-A3F6-C6E81D93B1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8C519D9-7D0E-40CE-A3F6-C6E81D93B1A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D33F7E-583C-4F8F-B26D-6757F0FD9296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D33F7E-583C-4F8F-B26D-6757F0FD9296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D33F7E-583C-4F8F-B26D-6757F0FD9296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D33F7E-583C-4F8F-B26D-6757F0FD9296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{BC8E08A3-27EB-4D6B-9993-8623CC2CE07E} = {573E7F08-F060-4A87-8BF0-8B5383C38297}
 		{73342BE0-FED4-4295-A605-4BD6BF186467} = {573E7F08-F060-4A87-8BF0-8B5383C38297}
 		{D8C519D9-7D0E-40CE-A3F6-C6E81D93B1A6} = {573E7F08-F060-4A87-8BF0-8B5383C38297}
+		{38D33F7E-583C-4F8F-B26D-6757F0FD9296} = {C64F6559-ACB8-41EA-800B-2B112EDC0A34}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DF91245-E53A-4859-8E0F-F2287AB2B2A5}

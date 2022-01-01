@@ -3,7 +3,7 @@ using RadarLite.Database.Models;
 using RadarLite.Interfaces;
 
 namespace RadarLite.Buisness.Services.Location;
-internal class LocationService : ILocationService {
+public class LocationService : ILocationService {
     private readonly ILogger logger;
     private RadarLiteContext context;
 

@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RadarLite.Database.Models.ComponentRegistration;
+
 namespace RadarLite.Database.Models;
 
 public sealed class RadarLiteContext : DbContext
@@ -16,7 +13,8 @@ public sealed class RadarLiteContext : DbContext
     #region DBSets
     #endregion
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) { 
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.AddLocationComponent();
         base.OnModelCreating(modelBuilder);
     }
 }
