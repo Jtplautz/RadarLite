@@ -133,8 +133,8 @@
     </ul>
   </div>
   <div>
-    <button @click="changeName('hehe')">Press this to change the name</button>
-    <button @click="changeAge('35')">Press this to change the age</button>
+    <button @click="changeName('Bar')">Press this to change the name</button>
+    <button @click="changeAge('25')">Press this to change the age</button>
   </div>
 </template>
 
@@ -152,8 +152,8 @@ export default defineComponent({
     //   age: 250 as string | number,
     // });
     // return { ...toRefs(state) };
-    const name = ref("Jimmie");
-    const age = ref<number | string>(25);
+    const name = ref("Foo");
+    const age = ref<number | string>(24);
 
     return { name, age };
   },
