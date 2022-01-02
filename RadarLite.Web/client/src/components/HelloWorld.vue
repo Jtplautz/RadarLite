@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ name }} {{ age }}</h1>
+    <h2 v-for="City in cities" v-bind:key="City.id">{{ City.name }}</h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -135,11 +136,16 @@
   <div>
     <button @click="changeName('Bar')">Press this to change the name</button>
     <button @click="changeAge('25')">Press this to change the age</button>
+    <button @click="fillCities()">Press this to change the age</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
+import City from "@/common/City";
+import Location from "@/common/Location";
+import { GetCitiesAsync } from "@/Services/ForecastService";
+
 export default defineComponent({
   name: "HelloWord",
   // props: {
@@ -154,8 +160,9 @@ export default defineComponent({
     // return { ...toRefs(state) };
     const name = ref("Foo");
     const age = ref<number | string>(24);
+    const cities = ref<Location[]>([]);
 
-    return { name, age };
+    return { name, age, cities };
   },
   // data() {
   //   return {
@@ -170,6 +177,9 @@ export default defineComponent({
     changeAge(age: string | number) {
       this.age = age;
       return this.age;
+    },
+    async fillCities() {
+      this.cities = await GetCitiesAsync();
     },
   },
 });

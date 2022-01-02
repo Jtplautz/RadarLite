@@ -1,10 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import City from "@/common/City";
+import Location from "@/common/Location";
 import { DeserializeArray } from "@/Helpers/JsonMapper";
 
-async function GetCities(): Promise<City[]> {
-  const path = "http://192.168.1.192:7500/api/city/NWS/cities";
+export async function GetCitiesAsync(): Promise<Location[]> {
+  const path = "http://192.168.1.192:7506/Cities";
   const response: AxiosResponse<Array<JsonMapper.IGenericObject>> =
-    await axios.get<City[]>(path);
-  return DeserializeArray(City, Object.values(response.data));
+    await axios.get<Location[]>(path);
+  return DeserializeArray(Location, Object.values(response.data));
 }
+

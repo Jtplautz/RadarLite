@@ -1,7 +1,7 @@
-import { ICity } from "@/common/Types";
+import { ILocation } from "@/common/Types";
 import { JsonProperty } from "@/Helpers/JsonMapper";
 
-class City implements ICity, JsonMapper.IGenericObject {
+class Location implements ILocation, JsonMapper.IGenericObject {
   @JsonProperty(`id`)
   public id = "";
 
@@ -27,4 +27,4 @@ class City implements ICity, JsonMapper.IGenericObject {
   //   console.log("a city was generated" + this.city);
   // }
 }
-export default City;
+export default Location;
