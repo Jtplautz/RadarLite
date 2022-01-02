@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace RadarLite.Identity.Data;
+namespace RadarLite.Identity.Areas.Identity.Data;
 
 public class RadarLiteIdentityContext : IdentityDbContext<IdentityUser>
 {

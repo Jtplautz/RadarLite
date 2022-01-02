@@ -4,9 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RadarLite.Identity.EndPoints;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
-using RadarLite.Identity.Data;
 using RadarLite.Database.Models;
+using RadarLite.Identity.Areas.Identity.Data;
+using Serilog;
+using RadarLite.Logging.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +17,11 @@ builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
 builder.Services.AddDbContext<RadarLiteContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteContextConnection")));
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    //.AddEntityFrameworkStores<RadarLiteIdentityContext>();// Add services to the container.
 
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<RadarLiteIdentityContext>();// Add services to the container.
+
+builder.Services.AddUserServices();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -50,6 +54,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+//In order to fully get this to work, we need to rely on an IIS cert. Need more info on how to set it up.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
@@ -66,11 +71,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 //Not sure if the database info should live in the API app settings.
 
-builder.Logging.Services.AddLogging(loggingBuilder =>
-    loggingBuilder.AddSeq());
+builder.Host.UseSerilog((ctx, lc) => lc
+        .ReadFrom.Configuration(ctx.Configuration)
+        .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
 
+builder.Services.AddHealthChecks().AddCheck("RadarLiteDB-check",
+            new SqlConnectionHealthCheck(builder.Configuration.GetConnectionString("RadarLiteContextConnection")),
+            HealthStatus.Unhealthy,
+            new string[] { "RadarLitedb" });
 
 var app = builder.Build();
+
 app.Logger.LogInformation("RadarLite.API Started.");
 app.MapUsersEndpoints();
 
@@ -83,7 +94,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseHealthChecks("/hc");
 app.MapControllers();
 
 app.Run();

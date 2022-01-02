@@ -31,7 +31,7 @@ public class RadarLiteContextFactory : IDesignTimeDbContextFactory<RadarLiteCont
                 warnings.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning);
             });
 
-            options.UseSqlServer(configuration.GetConnectionString("LocalConnection"), sqlOptions =>
+            options.UseSqlServer(configuration.GetConnectionString("RadarLiteContextConnection"), sqlOptions =>
             {
                 sqlOptions.EnableRetryOnFailure();
                 sqlOptions.MigrationsAssembly(typeof(RadarLiteContext).Assembly.GetName().Name);

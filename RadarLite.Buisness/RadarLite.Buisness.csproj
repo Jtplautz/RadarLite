@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\RadarLite.Database\RadarLite.Database.csproj" />
+    <ProjectReference Include="..\RadarLite.Interfaces\RadarLite.Interfaces.csproj" />
+    <ProjectReference Include="..\RadarLite.Web\RadarLite.Web.csproj" />
   </ItemGroup>
 
 </Project>
