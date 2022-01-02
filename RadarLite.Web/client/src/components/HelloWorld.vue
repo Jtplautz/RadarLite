@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ name }} {{ age }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -132,19 +132,55 @@
       </li>
     </ul>
   </div>
+  <div>
+    <button @click="changeName('hehe')">Press this to change the name</button>
+    <button @click="changeAge('35')">Press this to change the age</button>
+  </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent, reactive, ref, toRefs } from "vue";
+export default defineComponent({
+  name: "HelloWord",
+  // props: {
+  //   msg: string,
+  // },
+  components: {},
+  setup() {
+    // const state = reactive({
+    //   name: "Wisconsin",
+    //   age: 250 as string | number,
+    // });
+    // return { ...toRefs(state) };
+    const name = ref("Jimmie");
+    const age = ref<number | string>(25);
 
-@Options({
-  props: {
-    msg: String,
+    return { name, age };
   },
-})
-export default class HelloWorld extends Vue {
-  msg!: string;
-}
+  // data() {
+  //   return {
+  //     name: "Link",
+  //   };
+  // },
+  methods: {
+    changeName(name: string): string {
+      this.name = name;
+      return name;
+    },
+    changeAge(age: string | number) {
+      this.age = age;
+      return this.age;
+    },
+  },
+});
+// @Options({
+//   props: {
+//     msg: String,
+//   },
+// })
+// export default class HelloWorld extends Vue {
+//   msg!: string;
+// }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
