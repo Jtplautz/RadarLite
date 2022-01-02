@@ -4,4 +4,40 @@ Fast, interactive radar and weather application.
 
 This application is intened to be an ongoing, long term solution to having access to unified weather information quickly.
 
-By all means, Contribute!!
+# Current Status
+The application is currently functionable but very early in development.
+
+
+# Setting it up
+ It is reccommended to use Visual Studio and one more 'lightweight' IDE of your choice (VS code, JetBrains, etc...).
+ 
+ You'll need the .NET 6.0 SDK.
+ It is also reccommended that you have a ~somewhat~ understanding of minimal API concepts.
+ 
+ # Server side
+ After successfully loading the repo in your IDE, set the startup projects to RadarLite.NationalWeatherService, RadarLite.Identity, RadarLite.Web.
+ 
+ ![image](https://user-images.githubusercontent.com/31714144/147886985-75c06006-481e-475a-96af-2694e95b15a4.png)
+ 
+ Ports for these projects should be configured or checked in the appsettings.json. Default ports have been specifed.
+ 
+ Install dependencies.
+ 
+ # Client side
+ With your lightweight IDE, navigate to the project folder > RadarLite.Web > client. The client folder is what should be opened in the IDE. 
+ 
+ ![image](https://user-images.githubusercontent.com/31714144/147887300-610a8547-df06-4884-80f1-94be0603a7a6.png)
+
+ run 'yarn add' to install dependencies from the yarn.lock file. 
+ 
+ The package.json has been configured to run at the same port as RadarLite.Web.
+ 
+ If you are choosing to setup IIS for development, run the serve script (vue-cli-service serve --port 7504) followed by running your server side projects.
+ 
+ If you are not using IIS for dev purposes, configure either the RadarLite.Web project to not run at start up or simply change either the client port or RadarLite.Web port.
+ 
+ Develop!
+ 
+ # How to contribute
+All contributions are welcome!!
+
