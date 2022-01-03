@@ -1,8 +1,8 @@
 # RadarLite
-Fast, interactive radar and weather application.
-
-
-This application is intened to be an ongoing, long term solution to having access to unified weather information quickly.
+Fast, interactive radar and weather application; it is far from complete.
+This application is intened to be an ongoing, long term solution to having access to unified weather information quickly. 
+Use your best discretion and feel free to propose any sort of change in the route of a pull request.
+For more information on contriubting, view the CONTRIBUTING.md file
 
 # Current Status
 The application is currently functionable but very early in development.
@@ -37,7 +37,3 @@ The application is currently functionable but very early in development.
  If you are not using IIS for dev purposes, configure either the RadarLite.Web project to not run at start up or simply change either the client port or RadarLite.Web port.
  
  Develop!
- 
- # How to contribute
-All contributions are welcome!!
-
