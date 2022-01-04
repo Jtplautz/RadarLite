@@ -23,6 +23,8 @@ The application is currently functionable but very early in development.
  
  Install dependencies.
  
+ Run migrations against a sql server database.
+ 
  # Client side
  With your lightweight IDE, navigate to the project folder > RadarLite.Web > client. The client folder is what should be opened in the IDE. 
  
