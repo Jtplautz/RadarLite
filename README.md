@@ -38,4 +38,9 @@ The application is currently functionable but very early in development.
  
  If you are not using IIS for dev purposes, configure either the RadarLite.Web project to not run at start up or simply change either the client port or RadarLite.Web port.
  
+ # Miscellaneous notes from the developer
+ 
+ This project is not close to finished (unfortunately). There are big plans to keep pushing RadarLite for a long time! I hope whomever is reading this gets some value out of the
+ project; whether its the code, formating, or just overall being able to see a weather application like this. This project has been a personal interest for a very long time and now finally is coming into reality. So if you've made it this far, thank you! My mission is to give back to the community so much of what I have learned and hopefully one day have an application that is completely functionable. And hopefully meet some new people and continue to learn along the way - J
+ 
  Develop!
