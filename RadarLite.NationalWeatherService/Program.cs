@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using RadarLite.Database.Models;
 using RadarLite.NationalWeatherService.EndPoints;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<RadarLiteContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteContextConnection")));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -14,6 +19,9 @@ builder.Services.AddCors(options => {
         .WithOrigins("*");
     });
 });
+builder.Host.UseSerilog((ctx, lc) => lc
+        .ReadFrom.Configuration(ctx.Configuration)
+        .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
 //builder.Services.AddLocationService();
 var app = builder.Build();
 
