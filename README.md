@@ -5,7 +5,7 @@ Use your best discretion and feel free to propose any sort of change in the rout
 For more information on contriubting, view the CONTRIBUTING.md file
 
 # Current Status
-The application is currently functionable but very early in development.
+The application is currently functionable but very early in development. Future features will be noted. 
 
 
 # Setting it up
@@ -23,7 +23,7 @@ The application is currently functionable but very early in development.
  
  Install dependencies.
  
- Run migrations against a sql server database.
+ Run migrations against a Microsoft sql server database.
  
  # Client side
  With your lightweight IDE, navigate to the project folder > RadarLite.Web > client. The client folder is what should be opened in the IDE. 
