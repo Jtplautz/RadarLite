@@ -6,6 +6,7 @@ using RadarLite.Interfaces;
 
 namespace RadarLite.NationalWeatherService.EndPoints;
 public static class LocationEndpoints {
+    
     public static void MapLocationEndpoints(this WebApplication app) {
         app.MapGet("/Cities",  ([FromServices] RadarLiteContext context) =>
         {
