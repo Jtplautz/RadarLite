@@ -15,6 +15,11 @@ public static class LocationEndpoints {
             return locations;
         }
         );
+        app.MapGet("/City", ([FromServices] RadarLiteContext context) =>
+        {
+            return new Location { Name = "Faz" };
+        }
+        );
     }
     public static void AddLocationService(this IServiceCollection services) {
         services.AddSingleton<ILocationService, LocationService>();

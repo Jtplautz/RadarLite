@@ -2,26 +2,26 @@ import { ILocation } from "@/common/Types";
 import { JsonProperty } from "@/Helpers/JsonMapper";
 
 class Location implements ILocation, JsonMapper.IGenericObject {
-  @JsonProperty(`id`)
+  @JsonProperty("id")
   public id = "";
 
-  @JsonProperty(`name`)
+  @JsonProperty("name")
   public name = "";
 
-//   @JsonProperty(`county`)
-//   public county = "";
+  //   @JsonProperty(`county`)
+  //   public county = "";
 
-//   @JsonProperty(`state`)
-//   public state = "";
+  //   @JsonProperty(`state`)
+  //   public state = "";
 
-//   @JsonProperty(`zip`)
-//   public zip = 0;
+  //   @JsonProperty(`zip`)
+  //   public zip = 0;
 
-//   @JsonProperty(`Locationkey`)
-//   public locationKey = "";
+  //   @JsonProperty(`Locationkey`)
+  //   public locationKey = "";
 
-//   @JsonProperty(`timezoneCode`)
-//   public timezoneCode = "";
+  //   @JsonProperty(`timezoneCode`)
+  //   public timezoneCode = "";
 
   // constructor() {
   //   console.log("a city was generated" + this.city);

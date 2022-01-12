@@ -269,8 +269,8 @@ export function DeserializeArray<T extends JsonMapper.IGenericObject>(
   json: JsonMapper.IGenericObject[]
 ): T[] {
   const arr: T[] = [];
-  for (let i = 0; i < json[1].length; i++) {
-    const item: T | null = NullableDeserialize(clazz, json[1][i]); //changed to address issue with object
+  for (let i = 0; i < json.length; i++) {
+    const item: T | null = NullableDeserialize(clazz, json[i]); //changed to address issue with object
     if (item !== null) {
       arr.push(item);
     }

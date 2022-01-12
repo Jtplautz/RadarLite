@@ -11,14 +11,18 @@ builder.Services.AddDbContext<RadarLiteContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options => {
-    options.AddPolicy("VueCorsPolicy", builder => {
-        builder
-        .WithHeaders("*")
-        .WithMethods("*")
-        .WithOrigins("*");
-    });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("RadarLiteCorsOrigins",
+                          builder =>
+                          {
+                              builder
+                              .WithHeaders("*")
+                              .WithMethods("*")
+                              .WithOrigins("*");
+                          });
 });
+
 builder.Host.UseSerilog((ctx, lc) => lc
         .ReadFrom.Configuration(ctx.Configuration)
         .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
@@ -31,7 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("RadarLiteCorsOrigins");
 app.UseHttpsRedirection();
 
 var summaries = new[]
