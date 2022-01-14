@@ -14,8 +14,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection")));
-builder.Services.AddDbContext<RadarLiteContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteContextConnection")));
+
 
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -68,8 +67,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-
-//Not sure if the database info should live in the API app settings.
 
 builder.Host.UseSerilog((ctx, lc) => lc
         .ReadFrom.Configuration(ctx.Configuration)

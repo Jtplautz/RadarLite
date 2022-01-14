@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>{{ name }} {{ age }}</h1>
     <h2 v-for="City in cities" v-bind:key="City.id">{{ City.name }}</h2>
+    <h2>{{ city.name }}</h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -136,7 +137,8 @@
   <div>
     <button @click="changeName('Bar')">Press this to change the name</button>
     <button @click="changeAge('25')">Press this to change the age</button>
-    <button @click="fillCities()">Press this to change the age</button>
+    <button @click="fillCities()">Press this to load an array of cities</button>
+    <button @click="displayCity()">Press this to load a singular city</button>
   </div>
 </template>
 
@@ -144,7 +146,7 @@
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import City from "@/common/City";
 import Location from "@/common/Location";
-import { GetCitiesAsync } from "@/Services/ForecastService";
+import { GetCitiesAsync, GetCityAsync } from "@/Services/ForecastService";
 
 export default defineComponent({
   name: "HelloWord",
@@ -161,8 +163,10 @@ export default defineComponent({
     const name = ref("Foo");
     const age = ref<number | string>(24);
     const cities = ref<Location[]>([]);
+    const city = ref<Location>(new Location());
+    city.value.name = "test";
 
-    return { name, age, cities };
+    return { name, age, cities, city };
   },
   // data() {
   //   return {
@@ -177,6 +181,9 @@ export default defineComponent({
     changeAge(age: string | number) {
       this.age = age;
       return this.age;
+    },
+    async displayCity() {
+      this.city = await GetCityAsync(12345);
     },
     async fillCities() {
       this.cities = await GetCitiesAsync();

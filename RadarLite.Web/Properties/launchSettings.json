@@ -30,7 +30,7 @@
     },
     "IIS": {
       "commandName": "IIS",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "http://localhost:7504/", //same as vue dev server
       "applicationUrl": "http://localhost:7506;http://localhost:7504/",
       "environmentVariables": {

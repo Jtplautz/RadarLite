@@ -1,13 +1,25 @@
+using Microsoft.EntityFrameworkCore;
+using RadarLite.Buisness.Services.LocationService;
+using RadarLite.Database.Models;
+using RadarLite.Interfaces;
 using RadarLite.NationalWeatherService.EndPoints;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+RegisterServices(builder.Services);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-//builder.Services.AddLocationService();
+builder.Host.UseSerilog((ctx, lc) => lc
+        .ReadFrom.Configuration(ctx.Configuration)
+        .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
+
 var app = builder.Build();
+var apis = app.Services.GetServices<IApiEndPoints>();
+
+foreach (var api in apis)
+{
+    if (api is null) { throw new InvalidProgramException("Apis not found"); }
+    api.MapEndPoints(app);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -16,30 +28,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("RadarLiteCorsOrigins");
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-       new WeatherForecast
-       (
-           DateTime.Now.AddDays(index),
-           Random.Shared.Next(-20, 55),
-           summaries[Random.Shared.Next(summaries.Length)]
-       ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-app.MapLocationEndpoints();
-
 app.Run();
 
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary) {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+void RegisterServices(IServiceCollection services) {
+    // Add services to the container.
+
+    services.AddDbContext<RadarLiteContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteContextConnection")));
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen();
+    services.AddCors(options =>
+    {
+        options.AddPolicy("RadarLiteCorsOrigins",
+                              builder =>
+                              {
+                                  builder
+                                  .WithHeaders("*")
+                                  .WithMethods("*")
+                                  .WithOrigins("*");
+                              });
+    });
+
+    services.AddScoped<ILocationService, LocationService>();
+    services.AddTransient<IApiEndPoints, LocationEndpoints>();
 }
