@@ -183,7 +183,7 @@ export default defineComponent({
       return this.age;
     },
     async displayCity() {
-      this.city = await GetCityAsync();
+      this.city = await GetCityAsync(12345);
     },
     async fillCities() {
       this.cities = await GetCitiesAsync();

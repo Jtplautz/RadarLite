@@ -239,9 +239,7 @@ function InternalDeserialize<T extends Record<string, any>>(
 ): T {
   const instance = new clazz();
   Object.keys(instance).forEach((key: keyof T) => {
-    const decoratorMetaData: JsonMapper.IDecoratorMetaData<
-      Record<string, unknown>
-    > = getJsonProperty(instance, key as string);
+    const decoratorMetaData: JsonMapper.IDecoratorMetaData<Record<string, unknown>> = getJsonProperty(instance, key as string);
 
     if (decoratorMetaData) {
       if (decoratorMetaData.CustomConverter) {
