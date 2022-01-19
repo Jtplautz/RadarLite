@@ -1,5 +1,4 @@
 ﻿using RadarLite.Buisness.Services.User;
-using RadarLite.Identity.Areas.Identity.Data;
 using RadarLite.Interfaces.User;
 
 namespace RadarLite.Identity.EndPoints;

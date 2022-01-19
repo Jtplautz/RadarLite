@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace RadarLite.Identity.Areas.Identity.Data;
+namespace RadarLite.Login.Models;
 
-public class RadarLiteIdentityContext : IdentityDbContext<IdentityUser>
-{
+public class RadarLiteIdentityContext : IdentityDbContext<IdentityUser> {
     public RadarLiteIdentityContext(DbContextOptions<RadarLiteIdentityContext> options)
         : base(options)
     {

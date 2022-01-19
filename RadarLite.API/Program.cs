@@ -4,11 +4,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RadarLite.Identity.EndPoints;
 using System.Text;
-using RadarLite.Database.Models;
-using RadarLite.Identity.Areas.Identity.Data;
 using Serilog;
 using RadarLite.Logging.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using RadarLite.Login.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using RadarLite.Logging.HealthChecks;
 using Serilog;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
