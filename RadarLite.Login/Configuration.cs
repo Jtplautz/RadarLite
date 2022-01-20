@@ -1,4 +1,5 @@
-﻿using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
 
 namespace RadarLite.Login;
 public class Configuration {
@@ -31,22 +32,46 @@ public class Configuration {
     public static IEnumerable<Client> Clients =>
         new List<Client> {
             new Client {
-                ClientId = "client",
+                ClientId = "m2m",
 
                 // no interactive user, use the clientid/secret for authentication
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
 
                 // secret for authentication
-                ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
+                ClientSecrets = { new Secret("secret".Sha256())},
                 RedirectUris = { "http://localhost:7502/signin-oidc" },
                 FrontChannelLogoutUri =  "http://localhost:7502/signout-oidc",
                 PostLogoutRedirectUris = { "http://localhost:7502/signout-callback-oidc" },
                 AllowOfflineAccess = true,
                 // scopes that client has access to
-                AllowedScopes = { "openid","profile","email" }
+                 AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "email"
+                },
+            },
+            // interactive ASP.NET Core MVC client
+            new Client
+            {
+                ClientId = "minmalAPI",
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                ClientSecrets = { new Secret("secret".Sha256()) },
+
+                // where to redirect after login
+                RedirectUris = { "http://localhost:7502/signin-oidc" },
+
+                // where to redirect after logout
+                PostLogoutRedirectUris = { "http://localhost:7502/signout-callback-oidc" },
+
+                AllowOfflineAccess = true,
+
+                AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "email"
+                }
             }
         };
 }

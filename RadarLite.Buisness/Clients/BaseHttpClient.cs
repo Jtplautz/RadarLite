@@ -10,8 +10,8 @@ public abstract class BaseHttpClient : IBaseHttpClient {
     {
         httpClient.BaseAddress = new Uri(url);
         //httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.62"));
-        //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("JCRadarLite Weather, jtplautz@gmail.com");
-        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("JCRadarLite/1.0.0 (jtplautz@gmail.com)");
+
+        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("RadarLite/1.0.0 (jtplautz@gmail.com)");
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         this.httpClient = httpClient;
     }
