@@ -53,8 +53,11 @@ jobs:
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
-
-    - run: ./build.sh build
+        
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+        
+    #- run: ./build.sh build
     
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
