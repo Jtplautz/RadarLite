@@ -10,9 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RadarLite.Identity.Models;
 
 namespace RadarLite.Deploying;
-public class JCRadarLiteContextFactory : IDesignTimeDbContextFactory<RadarLiteContext> {
+public class RadarLiteContextFactory : IDesignTimeDbContextFactory<RadarLiteContext> {
     public RadarLiteContext CreateDbContext(string[] args)
     {
         IConfigurationRoot configuration = new ConfigurationBuilder()

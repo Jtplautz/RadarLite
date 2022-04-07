@@ -136,7 +136,7 @@
   <div>
     <button @click="changeName('Bar')">Press this to change the name</button>
     <button @click="changeAge('25')">Press this to change the age</button>
-    <button @click="fillCities()">Press this to change the age</button>
+    <button @click="fillCities()">Press this to talk to the backend</button>
   </div>
 </template>
 

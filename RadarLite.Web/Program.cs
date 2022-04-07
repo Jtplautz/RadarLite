@@ -8,7 +8,6 @@ builder.Host.UseSerilog((ctx, lc) => lc
 
 builder.WebHost.UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));
 
-
 var app = builder.Build();
 app.Logger.LogWarning("RadarLite.Web Started.");
 

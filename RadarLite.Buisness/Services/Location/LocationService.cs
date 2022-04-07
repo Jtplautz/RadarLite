@@ -1,4 +1,5 @@
-﻿using RadarLite.Database.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RadarLite.Database.Models;
 using RadarLite.Database.Models.Entities;
 using RadarLite.Interfaces;
 
@@ -11,12 +12,15 @@ public class LocationService : ILocationService {
     }
     public async Task<IEnumerable<Location>> GetLocationsAsync()
     {
-        //return the Locations from context.Locations.
+        var data = await context.Locations.ToListAsync();
+        if (data.Count > 0) { return data; }
+
         List<Location> locations = new List<Location>();
         locations.Add(new Location { Name = "Baz" });
         locations.Add(new Location { Name = "Shaz" });
 
         return locations;
+        
     }
 
     public async Task<Location> GetLocationAsync(int zip)

@@ -13,7 +13,7 @@ public class LocationEndpoints : IApiEndPoints {
 
     public void MapEndPoints(WebApplication app) {
 
-        app.MapGet("/location/cities", GetAll);
+        app.MapGet("/location/cities", GetAll);//.RequireAuthorization();
         app.MapGet("/location/city/{zip}", Get);
     }
 

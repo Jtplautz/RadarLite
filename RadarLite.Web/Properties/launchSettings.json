@@ -2,13 +2,9 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
-    "iis": {
-      "applicationUrl": "http://localhost:7506",
-      "sslPort": 0
-    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:45334",
-      "sslPort": 44367
+      "applicationUrl": "http://localhost:65482/",
+      "sslPort": 44337
     }
   },
   "profiles": {
@@ -18,7 +14,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:7504",
+      "applicationUrl": "http://192.168.254.125:7505/",
       "dotnetRunMessages": true
     },
     "IIS Express": {
@@ -30,12 +26,11 @@
     },
     "IIS": {
       "commandName": "IIS",
-      "launchBrowser": false,
-      "launchUrl": "http://localhost:7504/", //same as vue dev server
-      "applicationUrl": "http://localhost:7506;http://localhost:7504/",
+      "launchUrl": "http://192.168.254.125:7505/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:7506;http://localhost:7504/"
     }
   }
 }

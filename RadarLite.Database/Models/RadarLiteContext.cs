@@ -11,6 +11,7 @@ public sealed class RadarLiteContext : DbContext
     }
 
     #region DBSets
+    public DbSet<Entities.Location> Locations { get; set; }
     #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {

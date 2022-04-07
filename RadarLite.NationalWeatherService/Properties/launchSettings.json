@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost:7506",
+      "applicationUrl": "http://RadarLite.NationalWeatherService.me:7506",
       "sslPort": 0
     },
     "iisExpress": {

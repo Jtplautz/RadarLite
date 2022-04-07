@@ -55,7 +55,7 @@ public class Configuration {
             new Client
             {
                 ClientId = "minmalAPI",
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                AllowedGrantTypes = GrantTypes.Code,
                 ClientSecrets = { new Secret("secret".Sha256()) },
 
                 // where to redirect after login

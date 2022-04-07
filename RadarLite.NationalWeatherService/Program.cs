@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using RadarLite.Buisness.Services.LocationService;
 using RadarLite.Database.Models;
@@ -11,6 +12,33 @@ RegisterServices(builder.Services);
 builder.Host.UseSerilog((ctx, lc) => lc
         .ReadFrom.Configuration(ctx.Configuration)
         .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+           .AddJwtBearer(options =>
+           {
+                // base-address of your identityserver
+                
+               options.Authority = "http://localhost:7502";
+
+                // audience is optional, make sure you read the following paragraphs
+                // to understand your options
+                
+               options.TokenValidationParameters.ValidateAudience = false;
+
+                // it's recommended to check the type header to avoid "JWT confusion" attacks
+                
+               options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+
+               //dev only
+               options.RequireHttpsMetadata = false;
+           });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("radarlite.api", "RadarLite API");
+    });
+});
 
 var app = builder.Build();
 var apis = app.Services.GetServices<IApiEndPoints>();
@@ -30,6 +58,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("RadarLiteCorsOrigins");
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();
 
 void RegisterServices(IServiceCollection services) {
@@ -45,9 +75,9 @@ void RegisterServices(IServiceCollection services) {
                               builder =>
                               {
                                   builder
-                                  .WithHeaders("*")
+                                  .WithHeaders("Access-Control-Allow-Origin")
                                   .WithMethods("*")
-                                  .WithOrigins("*");
+                                  .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505");
                               });
     });
 

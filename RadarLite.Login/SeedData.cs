@@ -3,11 +3,10 @@ using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-
-using RadarLite.Login.Models;
 using Duende.IdentityServer.EntityFramework.Storage;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
+using RadarLite.Identity.Models;
 
 namespace RadarLite.Login;
 public class SeedData {

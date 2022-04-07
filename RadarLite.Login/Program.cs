@@ -39,6 +39,7 @@ try
     builder.Services.AddIdentityServer()
         .AddInMemoryApiScopes(Configuration.ApiScopes)
         .AddInMemoryClients(Configuration.Clients)
+        .AddInMemoryIdentityResources(Configuration.IdentityResources)
         .AddAspNetIdentity<IdentityUser>()
         .AddConfigurationStore(options =>
         {
@@ -83,11 +84,14 @@ try
     app.UseRouting();
 
     app.UseAuthentication();
-    //app.UseAuthorization();
+    app.UseAuthorization();
 
-    app.MapRazorPages();
-    app.MapControllers();
-
+    //app.MapRazorPages();
+    //.MapControllers().RequireAuthorization("ApiScope");
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapDefaultControllerRoute();//.RequireAuthorization("ApiScope");
+    });
     app.Run();
 }
 catch (Exception ex)
