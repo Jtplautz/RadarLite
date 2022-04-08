@@ -1,107 +1,79 @@
 ﻿using Newtonsoft.Json;
 using RadarLite.Buisness.Clients;
+using RadarLite.Constants;
+using RadarLite.Constants.URLs;
+using RadarLite.Database.Models.Entities;
+using RadarLite.Database.Models.Responses;
+using RadarLite.Interfaces;
+using System.Net.Http.Json;
 //using static JCRadarLite.Constants.Enums.State;
 
-namespace JCRadarLite.Buisness.Helpers.Clients.NationalWeatherService;
+namespace RadarLite.Buisness.Helpers.Clients.NationalWeatherService;
 //https://www.weather.gov/documentation/services-web-api
 
-public class NationalWeatherServiceClient : BaseHttpClient {
+public class NationalWeatherServiceClient : INationalWeatherServiceAPIClient {
 
-    private const string BASE_URI = "https://api.weather.gov/";
-    private const string GEOPOSITION = "points/";
-    private const string STATIONS_BY_STATE = "stations?state=";
-    private const string LOCATION_API = "locations/v1/";
-    private const string FORECAST_API = "forecasts/v1/";
+    private readonly HttpClient httpClient;
 
-    public NationalWeatherServiceClient(HttpClient httpClient)
-        : base(httpClient, BASE_URI)
+    public NationalWeatherServiceClient(HttpClient httpClient) =>
+        this.httpClient = httpClient
+            ?? throw new ArgumentNullException(nameof(httpClient));
+
+    //public async Task<Location> GetJokeByIdAsync(
+    //    string id, CancellationToken cancellationToken = default)
+    //{
+    //    var path = ApiUrlConstants.GetJokeById.AppendPathSegment(id);
+
+    //    var joke = await this.httpClient
+    //        .GetFromJsonAsync<Joke>(path, cancellationToken);
+
+    //    return joke ?? new();
+    //}
+
+    //public async Task<Joke> GetRandomJokeAsync(CancellationToken cancellationToken = default)
+    //{
+    //    var jokes = await this.httpClient.GetFromJsonAsync<JokeSearchResponse>(
+    //        ApiUrlConstants.GetRandomJoke, cancellationToken);
+
+    //    if (jokes is null or { Body.Count: 0 } or { Success: false })
+    //    {
+    //        throw new InvalidOperationException("This API is no joke.");
+    //    }
+
+    //    return jokes.Body.First();
+    //}
+
+    //public async Task<JokeSearchResponse> SearchAsync(
+    //    string term, CancellationToken cancellationToken = default)
+    //{
+        
+    //}
+
+    public async Task<LocationResponseModel> SearchAsync(int zip, CancellationToken cancellationToken = default)
     {
+        //var locations = await this.httpClient
+        //    .GetFromJsonAsync<LocationResponseModel>(
+        //        NationalWeatherServiceAPIConstants.HostHeader, cancellationToken);
+
+        bool loc = await IsNWSAPIHealthy(cancellationToken);
+        if (loc)
+        { return new LocationResponseModel { Success = true }; }
+        return new LocationResponseModel { Success = false };
     }
 
-    public async Task<T> HealthCheck<T>()
-    {
-        HttpRequestMessage request = CreateRequest();
+
+    //TODO: Get this to communicate with the NWS.
+    public async Task<bool> IsNWSAPIHealthy(CancellationToken cancellationToken = default) {
+        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, NationalWeatherServiceURLs.BASE_URI);
 
         HttpResponseMessage response = httpClient.SendAsync(request).Result;
 
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(json);
+            var result = JsonConvert.DeserializeObject<bool>(json);
             return result;
         }
-        return default(T);
+        return default(bool);
     }
-
-    public async Task<T> GetStateStations<T>(string state)
-    {
-        HttpRequestMessage request = CreateEnumRequest(state);
-
-        //request.UserAgent = "MyAppName/1.0.0 (someone@example.com)";
-
-        HttpResponseMessage response = httpClient.SendAsync(request).Result;
-
-        if (response.IsSuccessStatusCode)
-        {
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(json);
-            return result;
-        }
-        return default(T);
-    }
-
-    public async Task<T> GetGeopositionalWeather<T>(double latitude, double longitude)
-    {
-        HttpRequestMessage request = CreateGeopositionRequest(latitude, longitude);
-
-        //request.UserAgent = "MyAppName/1.0.0 (someone@example.com)";
-
-        HttpResponseMessage response = httpClient.SendAsync(request).Result;
-
-        if (true)//response.IsSuccessStatusCode)
-        {
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(json);
-            return result;
-        }
-        return default(T);
-    }
-
-    public async Task<T> GetWeather<T>(string formattedUrl)
-    {
-        HttpRequestMessage request = CreateGenericRequest(formattedUrl);
-
-        HttpResponseMessage response = httpClient.SendAsync(request).Result;
-
-        if (response.IsSuccessStatusCode)
-        {
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(json);
-            return result;
-        }
-        return default(T);
-    }
-
-    private HttpRequestMessage CreateRequest()
-    {
-        return new HttpRequestMessage(HttpMethod.Get, BASE_URI);
-    }
-
-    private HttpRequestMessage CreateEnumRequest(string state)
-    {
-        return new HttpRequestMessage(HttpMethod.Get, BASE_URI + STATIONS_BY_STATE + state);
-    }
-
-    private HttpRequestMessage CreateGeopositionRequest(double latitude, double longitude)
-    {
-        return new HttpRequestMessage(HttpMethod.Get, BASE_URI + GEOPOSITION + latitude + "," + longitude);
-    }
-
-    private HttpRequestMessage CreateGenericRequest(string formattedUrl)
-    {
-        return new HttpRequestMessage(HttpMethod.Get, formattedUrl);
-    }
-
-
-
 }

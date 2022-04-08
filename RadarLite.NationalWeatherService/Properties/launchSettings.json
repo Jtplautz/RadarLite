@@ -4,13 +4,10 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://RadarLite.NationalWeatherService.me:7506",
-      "sslPort": 0
-    },
-    "iisExpress": {
-      "applicationUrl": "http://localhost:57874",
-      "sslPort": 44387
+      "applicationUrl": "http://localhost:7506",
+      "sslPort": 44317
     }
+
   },
   "profiles": {
     "RadarLite.NationalWeatherService": {
@@ -22,23 +19,6 @@
       },
       "applicationUrl": "https://localhost:7264;http://localhost:5264",
       "dotnetRunMessages": true
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "IIS": {
-      "commandName": "IIS",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "sqlDebugging": true
     }
   }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RadarLite.Buisness.Helpers.Clients.NationalWeatherService;
 using RadarLite.Database.Models;
 using RadarLite.Database.Models.Entities;
 using RadarLite.Interfaces;
@@ -6,9 +7,11 @@ using RadarLite.Interfaces;
 namespace RadarLite.Buisness.Services.LocationService;
 public class LocationService : ILocationService {
     private RadarLiteContext context;
+    private INationalWeatherServiceAPIClient nwsClient;
 
-    public LocationService(RadarLiteContext context) {
+    public LocationService(RadarLiteContext context, INationalWeatherServiceAPIClient nwsClient) {
         this.context = context;
+        this.nwsClient = nwsClient;
     }
     public async Task<IEnumerable<Location>> GetLocationsAsync()
     {
@@ -26,7 +29,14 @@ public class LocationService : ILocationService {
     public async Task<Location> GetLocationAsync(int zip)
     {
         //return the Location from context.Locations.
-        return new Location { Name = "Faz" };
+        var response = await nwsClient.SearchAsync(zip);
+
+        if (response.Body?.Any() == true)
+#pragma warning disable CS8603 // Possible null reference return.
+        { return response.Body.FirstOrDefault(); }
+#pragma warning restore CS8603 // Possible null reference return.
+
+        return new Location { Name = "Failed!" };
     }
 
     public void Add<T>(T entity) where T : class => context.Add(entity);

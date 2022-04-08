@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using RadarLite.Buisness.Clients;
+using RadarLite.Buisness.Helpers.Clients.NationalWeatherService;
 using RadarLite.Buisness.Services.LocationService;
 using RadarLite.Database.Models;
 using RadarLite.Interfaces;
@@ -39,6 +41,7 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("radarlite.api", "RadarLite API");
     });
 });
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 var apis = app.Services.GetServices<IApiEndPoints>();
@@ -60,6 +63,7 @@ app.UseCors("RadarLiteCorsOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHealthChecks("/health");
 app.Run();
 
 void RegisterServices(IServiceCollection services) {
@@ -77,10 +81,14 @@ void RegisterServices(IServiceCollection services) {
                                   builder
                                   .WithHeaders("Access-Control-Allow-Origin")
                                   .WithMethods("*")
-                                  .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505");
+                                  .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505");
                               });
     });
 
     services.AddScoped<ILocationService, LocationService>();
     services.AddTransient<IApiEndPoints, LocationEndpoints>();
+    services.AddHttpClient<INationalWeatherServiceAPIClient, NationalWeatherServiceClient>((httpClient) =>
+    {
+        NationalWeatherServiceClientFactory.ConfigureHttpClientCore(httpClient);
+    });
 }
