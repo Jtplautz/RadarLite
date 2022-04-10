@@ -87,6 +87,7 @@ void RegisterServices(IServiceCollection services) {
 
     services.AddScoped<ILocationService, LocationService>();
     services.AddTransient<IApiEndPoints, LocationEndpoints>();
+    services.AddTransient<IApiEndPoints, HealthEndPoints>();
     services.AddHttpClient<INationalWeatherServiceAPIClient, NationalWeatherServiceClient>((httpClient) =>
     {
         NationalWeatherServiceClientFactory.ConfigureHttpClientCore(httpClient);

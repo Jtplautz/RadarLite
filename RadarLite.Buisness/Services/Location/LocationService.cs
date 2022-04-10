@@ -29,14 +29,17 @@ public class LocationService : ILocationService {
     public async Task<Location> GetLocationAsync(int zip)
     {
         //return the Location from context.Locations.
+
         var response = await nwsClient.SearchAsync(zip);
 
-        if (response.Body?.Any() == true)
-#pragma warning disable CS8603 // Possible null reference return.
-        { return response.Body.FirstOrDefault(); }
-#pragma warning restore CS8603 // Possible null reference return.
+        if (response.Success == true) { return new Location { Name = "Healthy!" }; }
 
         return new Location { Name = "Failed!" };
+    }
+
+    public async Task<bool> GetHealth()
+    {
+        return await nwsClient.GetHealthAsync();
     }
 
     public void Add<T>(T entity) where T : class => context.Add(entity);
@@ -46,5 +49,7 @@ public class LocationService : ILocationService {
     public async Task<bool> SaveAll() => (await context.SaveChangesAsync()) > 0;
 
     public void Update(Location existingLocation) => context.Update(existingLocation);
+
+
 }
 

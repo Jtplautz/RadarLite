@@ -46,6 +46,7 @@ public class NationalWeatherServiceClientFactory {
     {
         httpClient.DefaultRequestHeaders.Accept.Clear();
         httpClient.DefaultRequestHeaders.Accept.Add(new("application/json"));
+        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("RadarLite/1.0.0 (jtplautz@gmail.com)");
     }
 
     internal static void ConfigureHttpClient(

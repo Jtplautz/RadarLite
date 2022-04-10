@@ -18,62 +18,35 @@ public class NationalWeatherServiceClient : INationalWeatherServiceAPIClient {
     public NationalWeatherServiceClient(HttpClient httpClient) =>
         this.httpClient = httpClient
             ?? throw new ArgumentNullException(nameof(httpClient));
-
-    //public async Task<Location> GetJokeByIdAsync(
-    //    string id, CancellationToken cancellationToken = default)
-    //{
-    //    var path = ApiUrlConstants.GetJokeById.AppendPathSegment(id);
-
-    //    var joke = await this.httpClient
-    //        .GetFromJsonAsync<Joke>(path, cancellationToken);
-
-    //    return joke ?? new();
-    //}
-
-    //public async Task<Joke> GetRandomJokeAsync(CancellationToken cancellationToken = default)
-    //{
-    //    var jokes = await this.httpClient.GetFromJsonAsync<JokeSearchResponse>(
-    //        ApiUrlConstants.GetRandomJoke, cancellationToken);
-
-    //    if (jokes is null or { Body.Count: 0 } or { Success: false })
-    //    {
-    //        throw new InvalidOperationException("This API is no joke.");
-    //    }
-
-    //    return jokes.Body.First();
-    //}
-
-    //public async Task<JokeSearchResponse> SearchAsync(
-    //    string term, CancellationToken cancellationToken = default)
-    //{
-        
-    //}
-
+    
     public async Task<LocationResponseModel> SearchAsync(int zip, CancellationToken cancellationToken = default)
     {
         //var locations = await this.httpClient
         //    .GetFromJsonAsync<LocationResponseModel>(
         //        NationalWeatherServiceAPIConstants.HostHeader, cancellationToken);
 
-        bool loc = await IsNWSAPIHealthy(cancellationToken);
-        if (loc)
-        { return new LocationResponseModel { Success = true }; }
+        bool loc = await GetHealthAsync(cancellationToken);
+
+        if (loc) { 
+            return new LocationResponseModel { Success = true };
+        }
         return new LocationResponseModel { Success = false };
     }
 
 
     //TODO: Get this to communicate with the NWS.
-    public async Task<bool> IsNWSAPIHealthy(CancellationToken cancellationToken = default) {
+    public async Task<bool> GetHealthAsync(CancellationToken cancellationToken = default) {
         HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, NationalWeatherServiceURLs.BASE_URI);
 
-        HttpResponseMessage response = httpClient.SendAsync(request).Result;
+        HttpResponseMessage response =  httpClient.SendAsync(request).Result;
 
         if (response.IsSuccessStatusCode)
         {
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<bool>(json);
-            return result;
+           //keep this for santies sake.
+           var json = await response.Content.ReadAsStringAsync(); 
+           return true; //this just means we a got a response, not necessary healthy...
         }
         return default(bool);
     }
+
 }
