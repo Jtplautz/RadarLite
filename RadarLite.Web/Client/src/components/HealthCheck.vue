@@ -1,7 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string;
-}>();
+import HealthCheckButton from "./HealthCheckButton.vue";
+
+defineProps<{ msg: string }>();
 </script>
 
 <template>
@@ -12,12 +12,13 @@ defineProps<{
       <a target="_blank" href="https://vitejs.dev/">Vite</a> +
       <a target="_blank" href="https://vuejs.org/">Vue 3</a>. What's next?
     </h3>
+    <HealthCheckButton></HealthCheckButton>
   </div>
 </template>
 
 <style scoped>
 h1 {
-  font-weight: 500;
+  font-weight: 900;
   font-size: 2.6rem;
   top: -10px;
 }

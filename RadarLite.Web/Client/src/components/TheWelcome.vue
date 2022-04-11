@@ -43,7 +43,6 @@ import HealthCheckButton from "./HealthCheckButton.vue";
 
     More instructions are available in <code>README.md</code>.
   </WelcomeItem>
-  This is the welcome item!
   <WelcomeItem>
     <template #icon>
       <EcosystemIcon />
@@ -91,5 +90,4 @@ import HealthCheckButton from "./HealthCheckButton.vue";
     sustainability. You can help us by
     <a target="_blank" href="https://vuejs.org/sponsor/">becoming a sponsor</a>.
   </WelcomeItem>
-  <HealthCheckButton></HealthCheckButton>
 </template>
