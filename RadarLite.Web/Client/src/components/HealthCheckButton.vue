@@ -1,10 +1,14 @@
 <template>
-  <div class="health">
-    <button @click="increment">
-      Check health of the National Weather Service API
+  <div class="container">
+    <button class="button">
+      <span class="relative text-base text-black"
+        >Check the National Weather Service API Health</span
+      >
     </button>
   </div>
-  <span> {{ state.isHealthy }} - {{ state.count }} </span>
+  <span class="relative uppercase text-base text-gray">
+    {{ state.isHealthy }} - {{ state.count }}
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -22,8 +26,4 @@ async function increment(): Promise<void> {
 }
 </script>
 
-<style scoped>
-.health {
-  width: max-content;
-}
-</style>
+<style scoped></style>

@@ -63,6 +63,7 @@ app.UseCors("RadarLiteCorsOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSerilogRequestLogging();
 app.UseHealthChecks("/health");
 app.Run();
 
