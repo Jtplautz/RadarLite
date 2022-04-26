@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import HealthCheckVue from "./components/HealthCheck.vue";
-import HealthCheckButton from "./components/HealthCheckButton.vue";
+import { NTimeline } from "naive-ui";
+import HealthCheck from "./components/HealthCheck.vue";
 </script>
 
 <template>
@@ -9,12 +9,10 @@ import HealthCheckButton from "./components/HealthCheckButton.vue";
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
   </nav>
-  <div
-    class="p-6 max-w-sm mx-auto rounded-xl shadow-lg flex items-right space-x-4"
-  >
-    <HealthCheckButton></HealthCheckButton>
+  <div class="health">
+    <HealthCheck class="health"> </HealthCheck>
   </div>
-  <p class="text-bottom">
+  <p class="health">
     <a
       href="https://open.spotify.com/track/1jDit1o3MxkQxFDVNdYX9v?si=00658221951d41d0"
       target="_blank"
@@ -22,7 +20,37 @@ import HealthCheckButton from "./components/HealthCheckButton.vue";
       >I don't know..</a
     >
   </p>
-  <div class="container">here is where the weather information will come</div>
+  <div class="health">here is where the weather information will come</div>
+  <div style="display: flexbox">
+    <n-timeline>
+      <n-timeline-item content="Oops" />
+      <n-timeline-item
+        type="success"
+        title="Success"
+        content="JCRadarLite inception"
+        time="2020-07-12 20:46"
+      />
+      <n-timeline-item
+        type="error"
+        content="Restart JCRadarLiteV1"
+        time="2020-10-05 20:46"
+      />
+      <n-timeline-item
+        type="warning"
+        title="Warning"
+        content="Almost quit development"
+        time="2021-02-25 20:46"
+      />
+      <n-timeline-item
+        type="info"
+        title="Info"
+        content="working still"
+        time="2022-04-25 20:46"
+        line-type="dashed"
+      />
+      <n-timeline-item type="success" content="Success!" />
+    </n-timeline>
+  </div>
 </template>
 
 <style>
@@ -32,29 +60,15 @@ header {
   line-height: 1.5;
 }
 
+.health {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+  display: block;
+}
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
-.container {
-  text-align: center;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-.wrapper {
-  vertical-align: text-top;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
 }
 
 nav {
