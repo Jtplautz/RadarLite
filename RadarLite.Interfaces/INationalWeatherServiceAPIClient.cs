@@ -23,7 +23,7 @@ public interface INationalWeatherServiceAPIClient {
     /// <param name="term"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<bool> GetHealthAsync(
+    Task<HealthResponseModel> GetHealthAsync(
             CancellationToken cancellationToken = default);
 
 }

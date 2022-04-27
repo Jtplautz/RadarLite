@@ -2,6 +2,7 @@
 using RadarLite.Buisness.Helpers.Clients.NationalWeatherService;
 using RadarLite.Database.Models;
 using RadarLite.Database.Models.Entities;
+using RadarLite.Database.Models.Responses;
 using RadarLite.Interfaces;
 
 namespace RadarLite.Buisness.Services.LocationService;
@@ -37,7 +38,7 @@ public class LocationService : ILocationService {
         return new Location { Name = "Failed!" };
     }
 
-    public async Task<bool> GetHealth()
+    public async Task<HealthResponseModel> GetHealth()
     {
         return await nwsClient.GetHealthAsync();
     }

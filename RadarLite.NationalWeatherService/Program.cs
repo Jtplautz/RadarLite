@@ -63,6 +63,7 @@ app.UseCors("RadarLiteCorsOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSerilogRequestLogging();
 app.UseHealthChecks("/health");
 app.Run();
 
@@ -81,7 +82,7 @@ void RegisterServices(IServiceCollection services) {
                                   builder
                                   .WithHeaders("Access-Control-Allow-Origin")
                                   .WithMethods("*")
-                                  .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505");
+                                  .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000");
                               });
     });
 
