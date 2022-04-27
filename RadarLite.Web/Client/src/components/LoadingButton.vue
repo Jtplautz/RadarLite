@@ -2,7 +2,7 @@
   <n-space class="health" style="display: center">
     <n-button
       size="large"
-      type="tertiary"
+      type="default"
       :loading="loading"
       @click="handleClick"
     >
@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
 import { GetHealthAsync } from "@/services/LocationService";
+import { convertToBoolean } from "@/helpers/Conversions/ConversionHelper";
 import { NButton, NSpace, useMessage, useLoadingBar } from "naive-ui";
 
 export default defineComponent({
@@ -24,14 +25,33 @@ export default defineComponent({
     const message = useMessage();
 
     return {
-      handleClick() {
-        loadingBar.error();
+      async handleClick() {
+        loadingBar.start();
         loadingRef.value = true;
-        setTimeout(() => {
-          loadingRef.value = false;
-        }, 200);
+        const isAPIHealthy: boolean = convertToBoolean(
+          await (
+            await GetHealthAsync()
+          ).status
+        );
 
-        message.success("Nice one!");
+        state.isHealthy = isAPIHealthy;
+        state.count++;
+
+        loadingRef.value = state.isHealthy;
+
+        if (state.isHealthy) {
+          message.success("Nice one! The National Weather Service is up!");
+          loadingRef.value = false;
+        } else {
+          loadingBar.error();
+          message.error(
+            "Yikes! The National Weather Service connection is interrupted!"
+          );
+
+          loadingRef.value = false;
+        }
+
+        loadingBar.finish();
       },
       loading: loadingRef,
     };
@@ -40,11 +60,16 @@ export default defineComponent({
 
 const state = reactive({
   count: 0,
-  isHealthy: "false",
+  isHealthy: false,
 });
 
 async function increment(): Promise<void> {
   state.count++;
-  state.isHealthy = await (await GetHealthAsync()).status;
+  const isAPIHealthy: boolean = convertToBoolean(
+    await (
+      await GetHealthAsync()
+    ).status
+  );
+  state.isHealthy = isAPIHealthy;
 }
 </script>
