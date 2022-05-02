@@ -3,8 +3,8 @@ import HealthModel from "@/common/HealthModel";
 import { deserialize, DeserializeArray } from "@/helpers/JsonMapper";
 
 export async function GetHealthAsync(): Promise<HealthModel> {
-  axios.defaults.timeout = 5000;
-  const path = "https://localhost:7264/nws/healthy"; //"http://192.168.1.192:7506/Cities";
+  axios.defaults.timeout = 25000;
+  const path = "https://localhost:44317/nws/healthy"; //"http://192.168.1.192:7506/Cities";
   let response: AxiosResponse<JsonMapper.IGenericObject>;
 
   try {

@@ -10,18 +10,17 @@ import HealthCheck from "./components/HealthCheck.vue";
     <RouterLink to="/about">About</RouterLink>
   </nav>
   <div class="health">
-    <HealthCheck class="health"> </HealthCheck>
+    <HealthCheck class="health"></HealthCheck>
   </div>
   <p class="health">
     <a
       href="https://open.spotify.com/track/1jDit1o3MxkQxFDVNdYX9v?si=00658221951d41d0"
       target="_blank"
       rel="noopener"
-      >I don't know..</a
+      >I've got a rock in my boot!</a
     >
   </p>
-  <div class="health">here is where the weather information will come</div>
-  <div style="display: flexbox">
+  <div class="timeline">
     <n-timeline>
       <n-timeline-item content="Oops" />
       <n-timeline-item
@@ -94,5 +93,9 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
+}
+.timeline {
+  display: "flexbox";
+  align-content: center;
 }
 </style>

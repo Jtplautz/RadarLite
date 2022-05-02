@@ -29,9 +29,7 @@ export default defineComponent({
         loadingBar.start();
         loadingRef.value = true;
         const isAPIHealthy: boolean = convertToBoolean(
-          await (
-            await GetHealthAsync()
-          ).status
+          (await GetHealthAsync()).status
         );
 
         state.isHealthy = isAPIHealthy;
