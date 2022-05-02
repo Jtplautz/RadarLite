@@ -16,9 +16,8 @@ export function convertToBoolean(input: string | boolean | number): boolean {
       "OK",
     ].includes(input);
   } catch (e) {
-    //just return false and don't throw anything log that its bad respoonse
+    //just return false and don't throw anything log to seq
     console.log("Whoops! Looks like something is down unexpectedly.");
     return false;
-    //log(e) to seq or to backend..?
   }
 }
