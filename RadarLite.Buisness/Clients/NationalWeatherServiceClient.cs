@@ -34,7 +34,7 @@ public class NationalWeatherServiceClient : INationalWeatherServiceAPIClient {
     }
 
 
-    //TODO: Get this to communicate with the NWS.
+
     public async Task<bool> GetHealthAsync(CancellationToken cancellationToken = default) {
         HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, NationalWeatherServiceURLs.BASE_URI);
 

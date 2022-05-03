@@ -5,7 +5,7 @@ namespace RadarLite.Interfaces;
 public interface ILocationService {
     Task<Location> GetLocationAsync(int zip);
     Task<IEnumerable<Location>> GetLocationsAsync();
-    Task<bool> GetHealth();
+    Task<ValidatedHealthModelResponse> GetHealth();
     void Add<T>(T entity) where T : class;
     void Delete<T>(T entity) where T : class;
     Task<bool> SaveAll();
