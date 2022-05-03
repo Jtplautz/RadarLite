@@ -14,7 +14,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://192.168.1.192:7505/",
+      "applicationUrl": "http://192.168.1.192:3000/",
       "dotnetRunMessages": true
     },
     "IIS Express": {
@@ -26,11 +26,11 @@
     },
     "IIS": {
       "commandName": "IIS",
-      "launchUrl": "http://192.168.1.192:7505/",
+      "launchUrl": "http://192.168.1.192:3000/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:7506;http://localhost:7504/"
+      "applicationUrl": "http://localhost:3000;http://localhost:7506/"
     }
   }
 }

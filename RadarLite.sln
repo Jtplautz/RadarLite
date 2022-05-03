@@ -37,9 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.Identity", "Radar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.Deploying", "RadarLite.Deploying\RadarLite.Deploying.csproj", "{E2CE4652-7566-4616-9C04-668F449200AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.SDK.NationalWeatherServiceClient", "RadarLite.SDK.NationalWeatherServiceClient\RadarLite.SDK.NationalWeatherServiceClient.csproj", "{F0EECE5A-926F-421A-A577-D3017B5F89DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.SDK.NationalWeatherServiceClient", "RadarLite.SDK.NationalWeatherServiceClient\RadarLite.SDK.NationalWeatherServiceClient.csproj", "{F0EECE5A-926F-421A-A577-D3017B5F89DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.Extensions", "RadarLite.Extensions\RadarLite.Extensions.csproj", "{C991C7F0-7668-42B0-877E-18083AC061F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.Extensions", "RadarLite.Extensions\RadarLite.Extensions.csproj", "{C991C7F0-7668-42B0-877E-18083AC061F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.Auth", "RadarLite.Auth\RadarLite.Auth.csproj", "{74DD0583-CF0A-43BE-A3B0-AE94F31B576C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{C991C7F0-7668-42B0-877E-18083AC061F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C991C7F0-7668-42B0-877E-18083AC061F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C991C7F0-7668-42B0-877E-18083AC061F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74DD0583-CF0A-43BE-A3B0-AE94F31B576C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74DD0583-CF0A-43BE-A3B0-AE94F31B576C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74DD0583-CF0A-43BE-A3B0-AE94F31B576C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74DD0583-CF0A-43BE-A3B0-AE94F31B576C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +124,7 @@ Global
 		{E2CE4652-7566-4616-9C04-668F449200AD} = {00A4AFFF-95B0-47F3-8A55-EA0B139870D5}
 		{F0EECE5A-926F-421A-A577-D3017B5F89DD} = {00A4AFFF-95B0-47F3-8A55-EA0B139870D5}
 		{C991C7F0-7668-42B0-877E-18083AC061F7} = {836106B0-9530-4CE7-A08C-81CC9D22951F}
+		{74DD0583-CF0A-43BE-A3B0-AE94F31B576C} = {F8273E47-8176-46F5-9689-C63B7269454C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DF91245-E53A-4859-8E0F-F2287AB2B2A5}

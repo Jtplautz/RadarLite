@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdentityServerHost.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace RadarLite.Identity.Models;
-public class RadarLiteIdentityContext : IdentityDbContext<IdentityUser> {
+public class RadarLiteIdentityContext : IdentityDbContext<ApplicationUser> {
     public RadarLiteIdentityContext(DbContextOptions<RadarLiteIdentityContext> options)
         : base(options)
     {
