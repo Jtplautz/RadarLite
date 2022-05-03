@@ -1,5 +1,6 @@
 /*eslint-disable @typescript-eslint/no-use-before-define */
 
+//https://github.com/angular/benchpress-tree/issues/4 to fix reflect-metadata unresolved issue
 import "reflect-metadata";
 const JSON_META_DATA_KEY = "JsonProperty";
 
@@ -239,7 +240,9 @@ function InternalDeserialize<T extends Record<string, any>>(
 ): T {
   const instance = new clazz();
   Object.keys(instance).forEach((key: keyof T) => {
-    const decoratorMetaData: JsonMapper.IDecoratorMetaData<Record<string, unknown>> = getJsonProperty(instance, key as string);
+    const decoratorMetaData: JsonMapper.IDecoratorMetaData<
+      Record<string, unknown>
+    > = getJsonProperty(instance, key as string);
 
     if (decoratorMetaData) {
       if (decoratorMetaData.CustomConverter) {
