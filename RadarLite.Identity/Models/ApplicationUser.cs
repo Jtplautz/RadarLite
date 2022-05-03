@@ -9,4 +9,7 @@ namespace IdentityServerHost.Models;
 // Add profile data for application users by adding properties to the ApplicationUser class
 public class ApplicationUser : IdentityUser
 {
+    public bool Enabled { get; set; } 
+    public DateTime Created { get; set; }
+    public DateTime Modfied { get; set; }
 }

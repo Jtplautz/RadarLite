@@ -15,7 +15,19 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("api1", "My API"),
+            new ApiScope("NWS.Wind", "Wind"),
+            new ApiScope("NWS.Temperature", "Temp"),
+        };
+
+    public static IEnumerable<ApiResource> ApiResources =>
+        new ApiResource[]
+        {
+            new ApiResource("RadarLite.NationalWeatherService") 
+            {
+                Scopes = new List<string> { "NWS.Wind", "NWS.Temperature" },
+                ApiSecrets = new List<Secret>{ new Secret("initsecret".Sha256()) },
+                UserClaims = new List<string> { "base" }
+            }
         };
 
     public static IEnumerable<Client> Clients =>
@@ -29,22 +41,22 @@ public static class Config
 
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 // scopes that client has access to
-                AllowedScopes = { "api1" }
+                AllowedScopes = { "NWS.Wind" }
             },
 
             // interactive ASP.NET Core Web App
             new Client
             {
-                ClientId = "web",
-                ClientSecrets = { new Secret("secret".Sha256()) },
+                ClientId = "RadarLiteClient",
+                ClientSecrets = { new Secret("vuesecret".Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
                     
                 // where to redirect to after login
-                RedirectUris = { "https://localhost:5002/signin-oidc" },
+                RedirectUris = { "https://localhost:7056/signin-oidc" },
 
                 // where to redirect to after logout
-                PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
+                PostLogoutRedirectUris = { "https://localhost:7056/signout-callback-oidc" },
                 
                 AllowOfflineAccess = true,
                 
@@ -52,7 +64,8 @@ public static class Config
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "api1",
+                    "NWS.Wind",
+                    "NWS.Temperature"
                 }
             }
         };
