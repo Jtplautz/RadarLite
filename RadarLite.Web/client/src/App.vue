@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import { NTimeline } from "naive-ui";
 import HealthCheck from "./components/HealthCheck.vue";
 </script>
 
@@ -8,6 +7,8 @@ import HealthCheck from "./components/HealthCheck.vue";
   <nav>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
+    <RouterLink to="/login">Login</RouterLink>
+    <RouterView></RouterView>
   </nav>
   <div class="health">
     <HealthCheck class="health"></HealthCheck>
@@ -20,36 +21,6 @@ import HealthCheck from "./components/HealthCheck.vue";
       >I've got a rock in my boot!</a
     >
   </p>
-  <div class="timeline">
-    <n-timeline>
-      <n-timeline-item content="Oops" />
-      <n-timeline-item
-        type="success"
-        title="Success"
-        content="JCRadarLite inception"
-        time="2020-07-12 20:46"
-      />
-      <n-timeline-item
-        type="error"
-        content="Restart JCRadarLiteV1"
-        time="2020-10-05 20:46"
-      />
-      <n-timeline-item
-        type="warning"
-        title="Warning"
-        content="Almost quit development"
-        time="2021-02-25 20:46"
-      />
-      <n-timeline-item
-        type="info"
-        title="Info"
-        content="working still"
-        time="2022-04-25 20:46"
-        line-type="dashed"
-      />
-      <n-timeline-item type="success" content="Success!" />
-    </n-timeline>
-  </div>
 </template>
 
 <style>
@@ -93,9 +64,5 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
-}
-.timeline {
-  display: "flexbox";
-  align-content: center;
 }
 </style>

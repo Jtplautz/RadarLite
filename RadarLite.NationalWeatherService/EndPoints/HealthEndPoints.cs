@@ -12,7 +12,7 @@ public class HealthEndPoints : IApiEndPoints {
     public void MapEndPoints(WebApplication app)
     {
 
-        app.MapGet("/nws/healthy", Get);
+        app.MapGet("/nws/healthy", Get).RequireAuthorization("ApiScope");
     }
 
 
