@@ -50,8 +50,8 @@ public static class Config
                 ClientId = "RadarLiteClient",
                 ClientSecrets = { new Secret("vuesecret".Sha256()) },
 
-                AllowedGrantTypes = GrantTypes.Code,
-                    
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+
                 // where to redirect to after login
                 RedirectUris = { "https://localhost:7056/signin-oidc" },
 

@@ -1,6 +1,7 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
+using Duende.IdentityServer.Services;
 using IdentityServerHost;
 using IdentityServerHost.Models;
 using Microsoft.AspNetCore.Identity;
@@ -85,11 +86,21 @@ internal static class HostingExtensions {
                 options.ConfigureDbContext = b => b.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection"),
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
-            //.AddAspNetIdentity<ApplicationUser>();
-            //.AddTestUsers(TestUsers.Users);
             .AddDeveloperSigningCredential();
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("RadarLiteCorsOrigins",
+                                  builder =>
+                                  {
+                                      builder
+                                      .WithHeaders("Access-Control-Allow-Origin")
+                                      .WithMethods("*")
+                                      .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000");
+                                  });
+        });
 
+        //DO I NEED THIS STUFF??
         builder.Services.AddAuthentication()
             .AddOpenIdConnect("oidc", "RadarLiteIdentityServer", options =>
             {
@@ -98,9 +109,9 @@ internal static class HostingExtensions {
                 options.SaveTokens = true;
 
                 options.Authority = "https://localhost:7056";
-                options.ClientId = "interactive.confidential";
+                options.ClientId = "RadarLiteClient";
                 options.ClientSecret = "secret";
-                options.ResponseType = "code";
+                options.ResponseType = "client_credentials";
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -108,19 +119,8 @@ internal static class HostingExtensions {
                     RoleClaimType = "role"
                 };
             });
-                //Unnecessary for now
-                //.AddGoogle(options =>
-                //{
-                //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                //    // register your IdentityServer with Google at https://console.developers.google.com
-                //    // enable the Google+ API
-                //    // set the redirect URI to https://localhost:5001/signin-google
-                //    options.ClientId = "copy client ID from Google here";
-                //    options.ClientSecret = "copy client secret from Google here";
-                //});
-
-                return builder.Build();
+        builder.ConfigureCustomCorsPolicy();
+        return builder.Build();
     }
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
@@ -132,14 +132,45 @@ internal static class HostingExtensions {
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseCors("RadarLiteIdentityCorsOrigins");
         app.UseStaticFiles();
         app.UseRouting();
         app.UseIdentityServer();
         app.UseAuthorization();
-
+        
         app.MapRazorPages()
             .RequireAuthorization();
 
         return app;
+    }
+
+    public static WebApplicationBuilder ConfigureCustomCorsPolicy(this WebApplicationBuilder builder)
+    {
+        //var existingCors = builder.Services.Where(x => x.ServiceType == typeof(ICorsPolicyService)).LastOrDefault();
+        //if (existingCors != null &&
+        //    existingCors.ImplementationType == typeof(DefaultCorsPolicyService) &&
+        //    existingCors.Lifetime == ServiceLifetime.Transient)
+        //{
+        //    builder.Services.AddSingleton<ICorsPolicyService>((container) => {
+        //        var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+        //        return new DefaultCorsPolicyService(logger)
+        //        {
+        //            AllowedOrigins = { "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000" }
+        //        };
+        //    });
+        //}
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("RadarLiteIdentityCorsOrigins",
+                                  builder =>
+                                  {
+                                      builder
+                                      .WithHeaders("*")
+                                      .WithMethods("*")
+                                      .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000");
+                                  });
+        });
+
+        return builder;
     }
 }

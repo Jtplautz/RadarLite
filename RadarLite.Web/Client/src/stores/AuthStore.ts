@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import type { PropType } from "vue";
+import { getAccessToken } from "@/Services/AuthenticationService";
+import type UserModel from "@/common/UserModel";
 
 type Role = {
   name: string;
@@ -42,6 +44,13 @@ export const authStore = defineStore("authStore", {
 
     setAuth(boolean: boolean) {
       this.isAuth = boolean;
+    },
+    async setToken(user: UserModel) {
+      const usertofind = await getAccessToken(user);
+      if (usertofind === "") {
+        this.isAuth = true;
+        console.log(usertofind);
+      }
     },
   },
 });

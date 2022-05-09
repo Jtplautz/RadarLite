@@ -1,12 +1,18 @@
 <template>
   <n-form ref="formRef" :model="modelRef" :rules="rules">
-    <n-form-item path="age" label="Age">
-      <n-input v-model:value="modelRef.age" @keydown.enter.prevent />
+    <n-form-item path="email" label="Email">
+      <n-input
+        v-model:value="modelRef.email"
+        type="email"
+        placeholder="Email Address"
+        @keydown.enter.prevent
+      />
     </n-form-item>
     <n-form-item path="password" label="Password">
       <n-input
         v-model:value="modelRef.password"
         type="password"
+        placeholder="Password"
         @input="handlePasswordInput"
         @keydown.enter.prevent
       />
@@ -20,6 +26,7 @@
       <n-input
         v-model:value="modelRef.reenteredPassword"
         :disabled="!modelRef"
+        placeholder="Renter Password"
         type="password"
         @keydown.enter.prevent
       />
@@ -28,26 +35,25 @@
       <n-col :span="24">
         <div style="display: flex; justify-content: flex-end">
           <n-button
-            :disabled="modelRef.age === null"
+            :disabled="modelRef.email === null"
             round
             type="primary"
             @click="handleValidateButtonClick"
           >
-            Validate
+            Log in!
           </n-button>
         </div>
       </n-col>
     </n-row>
   </n-form>
 
-  <pre
+  <!-- <pre
     >{{ JSON.stringify(modelRef, null, 2) }}
-</pre
-  >
-  <label>{{ test }}</label>
+</pre -->
 </template>
 
 <script setup lang="ts">
+//https://www.naiveui.com/en-US/dark/components/form
 import { onMounted, ref } from "vue";
 import type {
   FormInst,
@@ -57,9 +63,12 @@ import type {
   FormRules,
 } from "naive-ui";
 import { useMessage } from "naive-ui";
+import { authStore } from "@/stores/AuthStore";
+import UserModel from "@/common/UserModel";
+import type { StoreDefinition } from "pinia";
 
 interface ModelType {
-  age: string | null;
+  email: string | null;
   password: string | null;
   reenteredPassword: string | null;
 }
@@ -68,7 +77,7 @@ const formRef = ref<FormInst | null>(null);
 const rPasswordFormItemRef = ref<FormItemInst | null>(null);
 const message = useMessage();
 const modelRef = ref<ModelType>({
-  age: null,
+  email: null,
   password: null,
   reenteredPassword: null,
 });
@@ -84,6 +93,7 @@ onMounted(async () => {
   emits("Blah!");
   console.log("Blah! emitted.");
   if (props.example > 10) test.value = "La Di Da Di Dah!";
+  console.log(test);
 });
 const props = defineProps({
   example: {
@@ -104,17 +114,18 @@ function validatePasswordSame(rule: FormItemRule, value: string): boolean {
 }
 
 const rules: FormRules = {
-  age: [
+  email: [
     {
       required: true,
       validator(rule: FormItemRule, value: string) {
         if (!value) {
-          return new Error("Age is required");
-        } else if (!/^\d*$/.test(value)) {
-          return new Error("Age should be an integer");
-        } else if (Number(value) < 18) {
-          return new Error("Age should be above 18");
+          return new Error("Email is required");
         }
+        // else if (!/^\d*$/.test(value)) {
+        //   return new Error("Email should be an integer");
+        // } else if (Number(value) < 18) {
+        //   return new Error("Email should be above 18");
+        // }
         return true;
       },
       trigger: ["input", "blur"],
@@ -151,15 +162,27 @@ function handlePasswordInput(): void {
     rPasswordFormItemRef.value?.validate({ trigger: "password-input" });
   }
 }
-function handleValidateButtonClick(e: MouseEvent): void {
+async function handleValidateButtonClick(e: MouseEvent): Promise<void> {
+  const user: UserModel = new UserModel();
+  // user.email = modelRef.value.email;
+  //user.password = modelRef.value.reenteredPassword;
+  user.email = "thesystem@radarlite.com";
+  user.username = "system";
+  user.password = "Pass123$";
+
   e.preventDefault();
-  formRef.value?.validate((errors: Array<FormValidationError> | undefined) => {
-    if (!errors) {
-      message.success("Valid");
-    } else {
-      console.log(errors);
-      message.error("Invalid");
+  formRef.value?.validate(
+    async (errors: Array<FormValidationError> | undefined) => {
+      if (!errors) {
+        message.success("Valid! Logging you in...");
+        //TODO-- Log in and get token. Pass token to store. Set isAuth flag to true.
+        const store: StoreDefinition = new authStore();
+        await store.setToken(user);
+      } else {
+        console.log(errors);
+        message.error("Invalid");
+      }
     }
-  });
+  );
 }
 </script>
