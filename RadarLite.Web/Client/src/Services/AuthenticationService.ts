@@ -36,6 +36,8 @@ import { deserialize } from "@/Helpers/JsonMapper";
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import { authStore } from "@/stores/AuthStore";
 import { serialize, DeserializeArray } from "@/helpers/JsonMapper";
+import mgr from "@/Security/security";
+import type { User } from "oidc-client";
 
 const API_CLIENT_ID = "RadarLiteClient";
 const API_CLIENT_SECRET = "0/6t7wnncRj4pwHTXkh6tGF8vpIYsr2YQsMWIB4sTbY=";
@@ -59,7 +61,6 @@ export async function getAccessToken(user: UserModel) {
     //scope: ["NWS.Wind", "NWS.Temperature"],
     //scope: "NWS.Wind",
   };
-
   try {
     const result = await axios.post<JsonMapper.IGenericObject>(
       "/connect/token",
@@ -72,6 +73,24 @@ export async function getAccessToken(user: UserModel) {
   } catch (err) {
     return err;
   }
+}
+export async function authenticate(returnpath: string): Promise<boolean> {
+  const user = await getUser();
+  if (!!user) {
+    return true;
+  }
+  return false;
+}
+export async function getUser() {
+  try {
+    let user = await mgr.getUser();
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
+}
+export function signIn(returnPath: string) {
+  returnPath ? mgr.signinRedirect({ state: returnPath }) : mgr.signinRedirect();
 }
 
 export async function Login(user: UserModel) {

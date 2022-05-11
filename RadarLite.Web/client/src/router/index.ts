@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import { authStore } from "@/stores/AuthStore";
 import LoginView from "../views/LoginView.vue";
+import type { StoreDefinition } from "pinia";
+import { authenticate } from "@/Services/AuthenticationService";
 const routes = [
   {
     path: "/",
@@ -19,11 +21,13 @@ const routes = [
   {
     path: "/login",
     name: "login",
+    meta: { requresAuth: true },
     component: LoginView,
   },
   {
     path: "/:catchAll(.*)",
     name: "PageNotFound",
+    meta: { requresAuth: true },
     component: () => import("../views/PageNotFoundView.vue"),
   },
 ];
@@ -31,14 +35,16 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
-// router.beforeEach((to, from, next) => {
-//   // ✅ This will work because the router starts its navigation after
-//   // the router is installed and pinia will be installed too
-//   const store = new authStore();
-//   console.log(store.isAuth);
-
-//   if (store.isAuth)
-//     return router.push("https:\\localhost:7506/index/account/login");
-// });
+router.beforeEach((to, from, next) => {
+  // ✅ This will work because the router starts its navigation after
+  // the router is installed and pinia will be installed too
+  const store = new authStore();
+  console.log(store.isAuth);
+  if (store.isAuth) {
+    console.log("authenticated");
+  } else if (to.matched.some((record) => record.meta.requresAuth)) {
+    store.authenticate(to.path);
+  }
+});
 
 export default router;

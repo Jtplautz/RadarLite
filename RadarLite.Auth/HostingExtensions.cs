@@ -110,7 +110,7 @@ internal static class HostingExtensions {
 
                 options.Authority = "https://localhost:7056";
                 options.ClientId = "RadarLiteClient";
-                options.ClientSecret = "secret";
+                options.ClientSecret = "0/6t7wnncRj4pwHTXkh6tGF8vpIYsr2YQsMWIB4sTbY=";
                 options.ResponseType = "client_credentials";
 
                 options.TokenValidationParameters = new TokenValidationParameters

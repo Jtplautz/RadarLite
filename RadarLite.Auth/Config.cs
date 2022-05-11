@@ -50,7 +50,7 @@ public static class Config
                 ClientId = "RadarLiteClient",
                 ClientSecrets = { new Secret("vuesecret".Sha256()) },
 
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                AllowedGrantTypes = GrantTypes.Implicit,
 
                 // where to redirect to after login
                 RedirectUris = { "https://localhost:7056/signin-oidc" },
@@ -66,7 +66,8 @@ public static class Config
                     IdentityServerConstants.StandardScopes.Profile,
                     "NWS.Wind",
                     "NWS.Temperature"
-                }
+                },
+                AllowAccessTokensViaBrowser = true,
             }
         };
 }

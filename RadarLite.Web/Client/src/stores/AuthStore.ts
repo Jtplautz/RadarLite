@@ -1,7 +1,12 @@
 import { defineStore } from "pinia";
 import type { PropType } from "vue";
-import { getAccessToken } from "@/Services/AuthenticationService";
+import {
+  getAccessToken,
+  authenticate,
+  signIn,
+} from "@/Services/AuthenticationService";
 import type UserModel from "@/common/UserModel";
+import type { User } from "oidc-client";
 
 type Role = {
   name: string;
@@ -50,6 +55,11 @@ export const authStore = defineStore("authStore", {
       if (usertofind === "") {
         this.isAuth = true;
         console.log(usertofind);
+      }
+    },
+    async authenticate(returnpath: string) {
+      if (!(await authenticate(returnpath))) {
+        signIn(returnpath);
       }
     },
   },
