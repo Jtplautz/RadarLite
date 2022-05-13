@@ -1,6 +1,9 @@
 @page
 @model IdentityServerHost.Pages.Login.Index
-
+@section Styles 
+{
+    <link href="@Url.Content("~/css/login.css")" rel="stylesheet" type="text/css" />
+}
 <div class="login-page">
 
     <partial name="_ValidationSummary" />
@@ -9,26 +12,26 @@
 
         @if (Model.View.EnableLocalLogin)
         {
-            <div class="col-sm-6">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <h2>RadarLite Login</h2>
                     </div>
 
                     <div class="card-body">
-                        <form asp-page="/Account/Login/Index">
+                        <form class="center-form" asp-route="Login">
                             <input type="hidden" asp-for="Input.ReturnUrl" />
 
                             <div class="form-group">
                                 <label asp-for="Input.Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
+                                <input tabindex="1" class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Input.Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
+                                <input tabindex="2" type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
                             </div>
                             
-                            @if (Model.View.AllowRememberLogin)
+                            @*@if (Model.View.AllowRememberLogin)
                             {
                                 <div class="form-group">
                                     <div class="form-check">
@@ -38,17 +41,17 @@
                                         </label>
                                     </div>
                                 </div>
-                            }
+                            }*@
                             
-                            <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
+                            <button class="btn btn-primary btn-md" name="Input.Button" value="login">Login</button>
+                            <button class="btn btn-secondary btn-md" name="Input.Button" value="cancel">Cancel</button>
                         </form>
                     </div>
                 </div>
             </div>
         }
 
-        @if (Model.View.VisibleExternalProviders.Any())
+@*        @if (Model.View.VisibleExternalProviders.Any())
         {
             <div class="col-sm-6">
                 <div class="card">
@@ -79,7 +82,6 @@
             <div class="alert alert-warning">
                 <strong>Invalid login request</strong>
                 There are no login schemes configured for this request.
-            </div>
-        }
+            </div>*@
     </div>
 </div>

@@ -1,6 +1,5 @@
 using IdentityServerAspNetIdentity;
 using Microsoft.EntityFrameworkCore;
-using RadarLite.Identity;
 using Serilog;
 
 try

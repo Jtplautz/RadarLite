@@ -1,8 +1,6 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using Duende.IdentityServer.Services;
-using IdentityServerHost;
 using IdentityServerHost.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -55,9 +53,13 @@ internal static class HostingExtensions {
         var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
         builder.Services.AddRazorPages();
 
+        RadarLite.Constants.Options.IdentityOptions identityOptions = new();
 
-        builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection"), 
+        builder.Configuration.GetSection(nameof(RadarLite.Constants.Options.IdentityOptions)).Bind(identityOptions);
+
+        builder.Services.AddDbContext<RadarLiteIdentityContext>(
+            options => options.UseSqlServer(
+                builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection"), 
             b => b.MigrationsAssembly(migrationsAssembly)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -88,19 +90,18 @@ internal static class HostingExtensions {
             })
             .AddDeveloperSigningCredential();
 
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("RadarLiteCorsOrigins",
-                                  builder =>
-                                  {
-                                      builder
-                                      .WithHeaders("Access-Control-Allow-Origin")
-                                      .WithMethods("*")
-                                      .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000");
-                                  });
-        });
+        //builder.Services.AddCors(options =>
+        //{
+        //    options.AddPolicy("RadarLiteCorsOrigins",
+        //                          builder =>
+        //                          {
+        //                              builder
+        //                              .WithHeaders("Access-Control-Allow-Origin")
+        //                              .WithMethods("*")
+        //                              .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000");
+        //                          });
+        //});
 
-        //DO I NEED THIS STUFF??
         builder.Services.AddAuthentication()
             .AddOpenIdConnect("oidc", "RadarLiteIdentityServer", options =>
             {
@@ -108,10 +109,12 @@ internal static class HostingExtensions {
                 options.SignOutScheme = IdentityServerConstants.SignoutScheme;
                 options.SaveTokens = true;
 
+                //radarliteidentity
                 options.Authority = "https://localhost:7056";
                 options.ClientId = "RadarLiteClient";
-                options.ClientSecret = "0/6t7wnncRj4pwHTXkh6tGF8vpIYsr2YQsMWIB4sTbY=";
+                options.ClientSecret = identityOptions.ClientSecret;
                 options.ResponseType = "client_credentials";
+                options.CallbackPath = "/signin-oidc";
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -146,19 +149,6 @@ internal static class HostingExtensions {
 
     public static WebApplicationBuilder ConfigureCustomCorsPolicy(this WebApplicationBuilder builder)
     {
-        //var existingCors = builder.Services.Where(x => x.ServiceType == typeof(ICorsPolicyService)).LastOrDefault();
-        //if (existingCors != null &&
-        //    existingCors.ImplementationType == typeof(DefaultCorsPolicyService) &&
-        //    existingCors.Lifetime == ServiceLifetime.Transient)
-        //{
-        //    builder.Services.AddSingleton<ICorsPolicyService>((container) => {
-        //        var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
-        //        return new DefaultCorsPolicyService(logger)
-        //        {
-        //            AllowedOrigins = { "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000" }
-        //        };
-        //    });
-        //}
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("RadarLiteIdentityCorsOrigins",

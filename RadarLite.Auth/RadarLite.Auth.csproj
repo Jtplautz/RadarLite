@@ -80,6 +80,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RadarLite.Constants\RadarLite.Constants.csproj" />
     <ProjectReference Include="..\RadarLite.Identity\RadarLite.Identity.csproj" />
   </ItemGroup>
 
