@@ -54,7 +54,7 @@ const config: AxiosRequestConfig = {
 export async function getAccessToken(user: UserModel) {
   const requestData = {
     client_id: API_CLIENT_ID,
-    grant_type: "client_credentials",
+    grant_type: "code",
     client_secret: API_CLIENT_SECRET,
     username: user.username,
     password: user.password,

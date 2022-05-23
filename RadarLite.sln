@@ -45,7 +45,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.Auth", "RadarLite
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B2523AF6-8CD6-4C44-A7A7-BCB3C67E9111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.NationalWeatherService.Test.Unit", "RadarLite.NationalWeatherService.Test.Unit\RadarLite.NationalWeatherService.Test.Unit.csproj", "{5EAD82F2-A753-471E-B983-19BB7E3BB1C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.NationalWeatherService.Test.Unit", "RadarLite.NationalWeatherService.Test.Unit\RadarLite.NationalWeatherService.Test.Unit.csproj", "{5EAD82F2-A753-471E-B983-19BB7E3BB1C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{317EEB48-8020-4F01-9C3B-55F025C102AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.Web.Gateway", "RadarLite.Web.Gateway\RadarLite.Web.Gateway.csproj", "{133AEE1D-0B12-4B6E-A054-22735591AB60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +117,10 @@ Global
 		{5EAD82F2-A753-471E-B983-19BB7E3BB1C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EAD82F2-A753-471E-B983-19BB7E3BB1C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EAD82F2-A753-471E-B983-19BB7E3BB1C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{133AEE1D-0B12-4B6E-A054-22735591AB60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{133AEE1D-0B12-4B6E-A054-22735591AB60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133AEE1D-0B12-4B6E-A054-22735591AB60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{133AEE1D-0B12-4B6E-A054-22735591AB60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +142,8 @@ Global
 		{C991C7F0-7668-42B0-877E-18083AC061F7} = {836106B0-9530-4CE7-A08C-81CC9D22951F}
 		{74DD0583-CF0A-43BE-A3B0-AE94F31B576C} = {F8273E47-8176-46F5-9689-C63B7269454C}
 		{5EAD82F2-A753-471E-B983-19BB7E3BB1C7} = {B2523AF6-8CD6-4C44-A7A7-BCB3C67E9111}
+		{317EEB48-8020-4F01-9C3B-55F025C102AD} = {F8273E47-8176-46F5-9689-C63B7269454C}
+		{133AEE1D-0B12-4B6E-A054-22735591AB60} = {317EEB48-8020-4F01-9C3B-55F025C102AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DF91245-E53A-4859-8E0F-F2287AB2B2A5}
