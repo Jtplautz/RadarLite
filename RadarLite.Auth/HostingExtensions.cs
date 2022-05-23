@@ -1,7 +1,6 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using IdentityServerHost;
 using IdentityServerHost.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -54,9 +53,13 @@ internal static class HostingExtensions {
         var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
         builder.Services.AddRazorPages();
 
+        RadarLite.Constants.Options.IdentityOptions identityOptions = new();
 
-        builder.Services.AddDbContext<RadarLiteIdentityContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection"), 
+        builder.Configuration.GetSection(nameof(RadarLite.Constants.Options.IdentityOptions)).Bind(identityOptions);
+
+        builder.Services.AddDbContext<RadarLiteIdentityContext>(
+            options => options.UseSqlServer(
+                builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection"), 
             b => b.MigrationsAssembly(migrationsAssembly)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -85,10 +88,19 @@ internal static class HostingExtensions {
                 options.ConfigureDbContext = b => b.UseSqlServer(builder.Configuration.GetConnectionString("RadarLiteIdentityContextConnection"),
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
-            //.AddAspNetIdentity<ApplicationUser>();
-            //.AddTestUsers(TestUsers.Users);
             .AddDeveloperSigningCredential();
 
+        //builder.Services.AddCors(options =>
+        //{
+        //    options.AddPolicy("RadarLiteCorsOrigins",
+        //                          builder =>
+        //                          {
+        //                              builder
+        //                              .WithHeaders("Access-Control-Allow-Origin")
+        //                              .WithMethods("*")
+        //                              .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000");
+        //                          });
+        //});
 
         builder.Services.AddAuthentication()
             .AddOpenIdConnect("oidc", "RadarLiteIdentityServer", options =>
@@ -97,10 +109,12 @@ internal static class HostingExtensions {
                 options.SignOutScheme = IdentityServerConstants.SignoutScheme;
                 options.SaveTokens = true;
 
+                //radarliteidentity
                 options.Authority = "https://localhost:7056";
-                options.ClientId = "interactive.confidential";
-                options.ClientSecret = "secret";
+                options.ClientId = "RadarLiteClient";
+                options.ClientSecret = identityOptions.ClientSecret;
                 options.ResponseType = "code";
+                options.CallbackPath = "/signin-oidc";
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -108,19 +122,8 @@ internal static class HostingExtensions {
                     RoleClaimType = "role"
                 };
             });
-                //Unnecessary for now
-                //.AddGoogle(options =>
-                //{
-                //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                //    // register your IdentityServer with Google at https://console.developers.google.com
-                //    // enable the Google+ API
-                //    // set the redirect URI to https://localhost:5001/signin-google
-                //    options.ClientId = "copy client ID from Google here";
-                //    options.ClientSecret = "copy client secret from Google here";
-                //});
-
-                return builder.Build();
+        builder.ConfigureCustomCorsPolicy();
+        return builder.Build();
     }
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
@@ -132,14 +135,32 @@ internal static class HostingExtensions {
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseCors("RadarLiteIdentityCorsOrigins");
         app.UseStaticFiles();
         app.UseRouting();
         app.UseIdentityServer();
         app.UseAuthorization();
-
+        
         app.MapRazorPages()
             .RequireAuthorization();
 
         return app;
+    }
+
+    public static WebApplicationBuilder ConfigureCustomCorsPolicy(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("RadarLiteIdentityCorsOrigins",
+                                  builder =>
+                                  {
+                                      builder
+                                      .WithHeaders("*")
+                                      .WithMethods("*")
+                                      .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000", "http://localhost:3000");
+                                  });
+        });
+
+        return builder;
     }
 }

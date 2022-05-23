@@ -15,32 +15,32 @@ builder.Host.UseSerilog((ctx, lc) => lc
         .ReadFrom.Configuration(ctx.Configuration)
         .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-           .AddJwtBearer(options =>
+    .AddJwtBearer(options =>
            {
-                // base-address of your identityserver
-                
-               options.Authority = "http://localhost:7502";
+               // base-address of your identityserver
 
-                // audience is optional, make sure you read the following paragraphs
-                // to understand your options
-                
+               options.Authority = "https://localhost:7056";
+
+               // audience is optional, make sure you read the following paragraphs
+               // to understand your options
+
                options.TokenValidationParameters.ValidateAudience = false;
 
-                // it's recommended to check the type header to avoid "JWT confusion" attacks
-                
+               // it's recommended to check the type header to avoid "JWT confusion" attacks
+
                options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
 
-               //dev only
-               options.RequireHttpsMetadata = false;
            });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
-        policy.RequireClaim("radarlite.api", "RadarLite API");
+        policy.RequireClaim("scope", "NWS.Temperature");
     });
 });
+
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
@@ -61,8 +61,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("RadarLiteCorsOrigins");
 app.UseHttpsRedirection();
-app.UseAuthentication();
 app.UseAuthorization();
+app.UseAuthentication();
 app.UseSerilogRequestLogging();
 app.UseHealthChecks("/health");
 app.Run();
