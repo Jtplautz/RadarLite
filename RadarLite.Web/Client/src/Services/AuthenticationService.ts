@@ -42,6 +42,7 @@ import type { User } from "oidc-client";
 const API_CLIENT_ID = "RadarLiteClient";
 const API_CLIENT_SECRET = "0/6t7wnncRj4pwHTXkh6tGF8vpIYsr2YQsMWIB4sTbY=";
 const API_URL = "https://localhost:7056/";
+const LOGIN_API_URL = "https://localhost:3000/";
 const config: AxiosRequestConfig = {
   baseURL: API_URL,
   timeout: 25000,
@@ -50,10 +51,18 @@ const config: AxiosRequestConfig = {
     "Content-Type": "application/x-www-form-urlencoded",
   },
 };
+const login_config: AxiosRequestConfig = {
+  baseURL: LOGIN_API_URL,
+  timeout: 25000,
+  headers: {
+    //"Authorization": `Bearer ${elasticPrivateKey}`,
+    "X-CSRF": "1",
+  },
+};
 
 export async function getAccessToken(user: UserModel) {
   const requestData = {
-    client_id: API_CLIENT_ID,
+    client_id: API_CLIENT_ID + "/bff/user",
     grant_type: "code",
     client_secret: API_CLIENT_SECRET,
     username: user.username,
@@ -63,9 +72,7 @@ export async function getAccessToken(user: UserModel) {
   };
   try {
     const result = await axios.post<JsonMapper.IGenericObject>(
-      "/connect/token",
-      //serialize(user),
-      requestData,
+      "/bff/user",
       config
     );
     console.log(result.response);
@@ -96,29 +103,5 @@ export function signIn(returnPath: string) {
 export async function Login(user: UserModel) {
   axios.defaults.timeout = 25000;
   const path = "https://localhost:44317/nws/healthy";
-  let response: AxiosResponse<JsonMapper.IGenericObject>;
-
-  // try {
-  //   if (store.isAuth != true) {
-  //     console.log("User Not Logged In");
-  //     //redirect them away? idk..
-  //   }
-  //   response = await axios.get<JsonMapper.IGenericObject>(path);
-
-  //   return deserialize(UserModel, response.data);
-  // } catch (e) {
-  //   console.log("Error retrieiving connection with identity server. Timeout");
-  //   return new UserModel();
-  // }
+  //let response: AxiosResponse<JsonMapper.IGenericObject>;
 }
-// axios.defaults.timeout = 25000;
-//   const path = "https://localhost:44317/nws/healthy"; //"http://192.168.1.192:7506/Cities";
-//   let response: AxiosResponse<JsonMapper.IGenericObject>;
-
-//   try {
-//     response = await axios.get<JsonMapper.IGenericObject>(path);
-//     return deserialize(HealthModel, response.data);
-//   } catch (e) {
-//     console.log("Error retrieiving connection with server. Timeout");
-//     return new HealthModel();
-//   }

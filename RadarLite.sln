@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.NationalWeatherSe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{317EEB48-8020-4F01-9C3B-55F025C102AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarLite.Web.Gateway", "RadarLite.Web.Gateway\RadarLite.Web.Gateway.csproj", "{133AEE1D-0B12-4B6E-A054-22735591AB60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadarLite.Web.Gateway", "RadarLite.Web.Gateway\RadarLite.Web.Gateway.csproj", "{133AEE1D-0B12-4B6E-A054-22735591AB60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
