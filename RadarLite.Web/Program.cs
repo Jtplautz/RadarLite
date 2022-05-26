@@ -1,7 +1,5 @@
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
 using RadarLite.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -19,6 +17,10 @@ try
     builder.Services.AddAuthorization();
     builder.Services.AddControllers();
     builder.Services.AddBff();
+    builder.Services.AddUserAccessTokenHttpClient("RadarLiteTokenClient", configureClient: client =>
+    {
+        client.BaseAddress = new Uri("https://localhost:7056/");
+    });
     JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
     builder.Services.AddSpaStaticFiles(configuration =>
@@ -32,22 +34,32 @@ try
         options.DefaultChallengeScheme = "oidc";
         options.DefaultSignOutScheme = "oidc";
     })
-       .AddCookie("Cookies")
+       .AddCookie("Cookies", options =>
+       {
+           options.Cookie.Name = "RadarLite_Host-bff";
+           options.Cookie.SameSite = SameSiteMode.Strict;
+       })
        .AddOpenIdConnect("oidc", options =>
        {
            options.Authority = "https://localhost:7056";
 
            options.ClientId = "RadarLiteClient";
-           options.ClientSecret = "0/6t7wnncRj4pwHTXkh6tGF8vpIYsr2YQsMWIB4sTbY=";
+           options.ClientSecret = "vuesecret";
            options.ResponseType = "code";
-           options.CallbackPath = "/signin-oidc";
+           options.ResponseMode = "query";
+       
+           options.GetClaimsFromUserInfoEndpoint = true;
+           options.MapInboundClaims = true;
+           options.SaveTokens = true;
+           options.Scope.Clear();
+           //options.CallbackPath = "/signin-oidc";
            options.Scope.Add("openid");
            options.Scope.Add("profile");
            options.Scope.Add("NWS.Wind");
            options.Scope.Add("NWS.Temperature");
 
            options.SaveTokens = true;
-           options.GetClaimsFromUserInfoEndpoint = true;
+           
        });
 
     var app = builder.Build();
@@ -78,7 +90,7 @@ try
         app.UseSpa(spa =>
         {
                 // use 'build-dev' npm script
-                spa.Options.StartupTimeout = TimeSpan.FromSeconds(10);
+            spa.Options.StartupTimeout = TimeSpan.FromSeconds(10);
             spa.Options.SourcePath = "Client";
             spa.UseViteDevelopmentServer();
         });
@@ -90,6 +102,6 @@ try
 
 catch (Exception ex)
 {
-    Log.Logger.Error("Vite server failed to start.", ex);
+    Log.Logger.Fatal("Vite server failed to start.", ex);
     Log.CloseAndFlush();
 }

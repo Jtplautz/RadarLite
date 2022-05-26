@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import LoginView from "./views/LoginView.vue";
 </script>
 
 <template>
   <nav>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
-    <RouterLink to="/login">Login</RouterLink>
+    <RouterLink to="/bff/login">Login</RouterLink>
     <RouterView></RouterView>
   </nav>
 </template>

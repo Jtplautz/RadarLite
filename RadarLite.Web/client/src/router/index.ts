@@ -35,16 +35,22 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
+// router.beforeEach((to, from, next) => {
+//   // ✅ This will work because the router starts its navigation after
+//   // the router is installed and pinia will be installed too
+//   // const store = new authStore();
+//   // console.log(store.isAuth);
+//   // if (store.isAuth) {
+//   //   console.log("authenticated");
+//   // } else if (to.matched.some((record) => record.meta.requresAuth)) {
+//   //   store.authenticate(to.path);
+//   // }
+// });
+
 router.beforeEach((to, from, next) => {
-  // ✅ This will work because the router starts its navigation after
-  // the router is installed and pinia will be installed too
   const store = new authStore();
-  console.log(store.isAuth);
-  if (store.isAuth) {
-    console.log("authenticated");
-  } else if (to.matched.some((record) => record.meta.requresAuth)) {
-    store.authenticate(to.path);
-  }
+  if (to.name !== "PageNotFound" && !store.isAuth) next({ name: "/bff/login" });
+  else next();
 });
 
 export default router;

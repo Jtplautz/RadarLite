@@ -38,13 +38,14 @@ import { authStore } from "@/stores/AuthStore";
 import { serialize, DeserializeArray } from "@/helpers/JsonMapper";
 import mgr from "@/Security/security";
 import type { User } from "oidc-client";
+import router from "@/router";
 
 const API_CLIENT_ID = "RadarLiteClient";
 const API_CLIENT_SECRET = "0/6t7wnncRj4pwHTXkh6tGF8vpIYsr2YQsMWIB4sTbY=";
-const API_URL = "https://localhost:7056/";
-const LOGIN_API_URL = "https://localhost:3000/";
+const IDENTITY_URL = "https://localhost:7056/";
+const LOGIN_API_URL = "https://localhost:5000";
 const config: AxiosRequestConfig = {
-  baseURL: API_URL,
+  baseURL: IDENTITY_URL,
   timeout: 25000,
   headers: {
     //"Authorization": `Bearer ${elasticPrivateKey}`,
@@ -62,7 +63,7 @@ const login_config: AxiosRequestConfig = {
 
 export async function getAccessToken(user: UserModel) {
   const requestData = {
-    client_id: API_CLIENT_ID + "/bff/user",
+    client_id: API_CLIENT_ID,
     grant_type: "code",
     client_secret: API_CLIENT_SECRET,
     username: user.username,
@@ -71,8 +72,8 @@ export async function getAccessToken(user: UserModel) {
     //scope: "NWS.Wind",
   };
   try {
-    const result = await axios.post<JsonMapper.IGenericObject>(
-      "/bff/user",
+    const result = await axios.get<JsonMapper.IGenericObject>(
+      "/bff/login?returnUrl=/home",
       config
     );
     console.log(result.response);
