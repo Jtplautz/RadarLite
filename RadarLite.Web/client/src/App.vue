@@ -7,7 +7,8 @@ import LoginView from "./views/LoginView.vue";
   <nav>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
-    <RouterLink to="login">Login</RouterLink>
+    <RouterLink to="/login">Login</RouterLink>
+    <RouterLink to="/logout">Logout</RouterLink>
     <RouterView></RouterView>
   </nav>
 </template>

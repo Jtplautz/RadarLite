@@ -115,6 +115,8 @@ internal static class HostingExtensions {
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
                 options.CallbackPath = "/signin-oidc";
+                options.SignedOutRedirectUri = "/home";
+                options.SignedOutCallbackPath = "/home";
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

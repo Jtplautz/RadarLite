@@ -8,6 +8,8 @@ import path from "path";
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import AxiosInstance from "@/common/AxiosInstance";
 import { ErrorResponse, UnauthorizedError } from "@/common/ErrorModels";
+import UserSessionModel from "@/common/UserSessionModel";
+import { DeserializeArray } from "@/Helpers/JsonMapper";
 const routes = [
   {
     path: "/",
@@ -27,6 +29,12 @@ const routes = [
     name: "login",
     meta: { requresAuth: false },
     component: LoginView,
+  },
+  {
+    path: "/logout",
+    name: "logout",
+    meta: { requresAuth: true },
+    component: () => import("../views/LoggedOutView.vue"),
   },
   {
     path: "/:catchAll(.*)",
@@ -53,40 +61,36 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = new authStore();
-
-  const result = AxiosInstance.get<JsonMapper.IGenericObject>("/bff/user", {
+  //move logic into store
+  const result = AxiosInstance.get<JsonMapper.IGenericObject[]>("/bff/user", {
     headers: {
       "x-csrf": 1,
     },
   })
     .then((response) => {
       console.log(response.status);
+      //if its a 200 then the person is logged in
+      store.isAuth = true;
       if (response.status !== 200) {
         store.isAuth = false;
 
-        if (to.name !== "login" && !store.isAuth) {
+        if (to.name === "about" && !store.isAuth) {
           window.location.href = "/bff/login";
           //next({ name: "/login" });
         } else {
           throw new UnauthorizedError("Response was not 401 and not 200.", 401);
         }
+        store.isAuth = true;
+      } else if (to.name === "logout" && store.isAuth) {
+        const val = DeserializeArray(UserSessionModel, response.data);
+        if (val[8].value !== "") {
+          window.location.href = "" + val[8].value;
+        } else {
+          next();
+        }
       }
     })
     .catch();
-
-  //  if(error instanceof InternalServerError) {
-  //   window.location.href = "/bff/login";
-  //  }
-
-  //  window.location.href = "/bff/login";
-  // };
-
-  //   // check link param exit using route param method
-  // if (link exit) {
-  //     //  window.location.href =   add redirtect url
-  // } else {
-  //   next();
-  // }
 });
 
 export default router;

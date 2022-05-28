@@ -59,7 +59,10 @@ try
            options.Scope.Add("NWS.Temperature");
 
            options.SaveTokens = true;
-           
+
+           options.SignedOutRedirectUri = "/home";
+           options.SignedOutCallbackPath = "/home";
+
        });
 
     var app = builder.Build();
