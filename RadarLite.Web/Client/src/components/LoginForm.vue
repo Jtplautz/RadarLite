@@ -66,6 +66,7 @@ import { useMessage } from "naive-ui";
 import { authStore } from "@/stores/AuthStore";
 import UserModel from "@/common/UserModel";
 import type { StoreDefinition } from "pinia";
+import router from "@/router/index";
 
 interface ModelType {
   email: string | null;
@@ -177,7 +178,9 @@ async function handleValidateButtonClick(e: MouseEvent): Promise<void> {
         message.success("Valid! Logging you in...");
         //TODO-- Log in and get token. Pass token to store. Set isAuth flag to true.
         const store: StoreDefinition = new authStore();
-        await store.setToken(user);
+        //await store.setToken(user);
+        //this.$router.push("/bff/login");
+        router.push("/bff/login/");
       } else {
         console.log(errors);
         message.error("Invalid");

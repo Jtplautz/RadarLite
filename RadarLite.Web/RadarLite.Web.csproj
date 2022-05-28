@@ -8,6 +8,9 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Duende.BFF" Version="1.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0-preview.2.22152.2" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.0-preview.2.22153.2" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.0-preview.2.22153.2" />
@@ -23,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RadarLite.Extensions\RadarLite.Extensions.csproj" />
     <ProjectReference Include="..\RadarLite.Logging\RadarLite.Logging.csproj" />
   </ItemGroup>
 

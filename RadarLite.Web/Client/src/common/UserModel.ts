@@ -9,3 +9,9 @@ class UserModel implements JsonMapper.IGenericObject {
   public email: string | null = "";
 }
 export default UserModel;
+
+// class UserSessionModelArray implements JsonMapper.IGenericObject {
+//   public UserSessionModels: Array<UserSessionModel> =
+//     new Array<UserSessionModel>();
+// }
+// export default UserSessionModelArray;

@@ -112,9 +112,11 @@ internal static class HostingExtensions {
                 //radarliteidentity
                 options.Authority = "https://localhost:7056";
                 options.ClientId = "RadarLiteClient";
-                options.ClientSecret = identityOptions.ClientSecret;
+                options.ClientSecret = "secret";
                 options.ResponseType = "code";
                 options.CallbackPath = "/signin-oidc";
+                options.SignedOutRedirectUri = "/home";
+                options.SignedOutCallbackPath = "/home";
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -157,7 +159,7 @@ internal static class HostingExtensions {
                                       builder
                                       .WithHeaders("*")
                                       .WithMethods("*")
-                                      .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "http://192.168.1.192:3000", "http://localhost:3000");
+                                      .WithOrigins("http://RadarLite.Web.me:7505", "http://192.168.254.125:7505", "http://192.168.1.192:7505", "https://192.168.1.192:5000", "https://localhost:5000");
                                   });
         });
 
