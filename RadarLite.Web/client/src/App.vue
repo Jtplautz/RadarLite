@@ -9,6 +9,7 @@ import LoginView from "./views/LoginView.vue";
     <RouterLink to="/about">About</RouterLink>
     <RouterLink to="/login">Login</RouterLink>
     <RouterLink to="/logout">Logout</RouterLink>
+    <RouterLink to="/create-account">Sign Up</RouterLink>
     <RouterView></RouterView>
   </nav>
 </template>

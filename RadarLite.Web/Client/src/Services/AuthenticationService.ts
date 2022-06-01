@@ -106,3 +106,15 @@ export async function Login(user: UserModel) {
   const path = "https://localhost:44317/nws/healthy";
   //let response: AxiosResponse<JsonMapper.IGenericObject>;
 }
+
+export async function CreateNewUser(newUser: UserModel): Promise<boolean> {
+  try {
+    //set axios up, injectors?
+    //Create the path, call the enpoint with Post
+    //Server returns true if it was successful
+    //else throw an error?
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
