@@ -2,9 +2,9 @@
 
 namespace RadarLite.NationalWeatherService.EndPoints;
 public class HealthEndPoints : IApiEndPoints {
-    private ILogger<LocationEndpoints> logger;
+    private ILogger<HealthEndPoints> logger;
 
-    public HealthEndPoints(ILogger<LocationEndpoints> logger)
+    public HealthEndPoints(ILogger<HealthEndPoints> logger)
     {
         this.logger = logger;
     }

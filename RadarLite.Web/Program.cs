@@ -1,6 +1,7 @@
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using RadarLite.Extensions;
+using RadarLite.Web.EndPoints;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 try
@@ -64,7 +65,7 @@ try
            options.SignedOutCallbackPath = "/home";
 
        });
-
+    builder.Services.AddTransient<IUserAccountEndPoints, UsesrAccountEndPoints>();
     var app = builder.Build();
     app.Logger.LogWarning("RadarLite.Web Started.");
 
@@ -73,6 +74,15 @@ try
         app.UseExceptionHandler("/Error");
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
+    }
+
+    var apis = app.Services.GetServices<IUserAccountEndPoints>();
+
+    foreach (var api in apis)
+    {
+        if (api is null)
+        { throw new InvalidProgramException("Apis not found"); }
+        api.MapEndPoints(app);
     }
 
     app.UseHttpsRedirection();

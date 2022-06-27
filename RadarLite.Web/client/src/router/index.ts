@@ -85,7 +85,8 @@ router.beforeEach((to, from, next) => {
           window.location.href = "/bff/login";
         }
         if (to.name === "create-account" && !store.isAuth) {
-          next();
+          window.location.href = "/bff/signup";
+          //next();
         }
       }
       //if the response is a 200, then the user is logged in
