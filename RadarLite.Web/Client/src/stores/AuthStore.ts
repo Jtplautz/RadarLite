@@ -4,9 +4,9 @@ import {
   getAccessToken,
   authenticate,
   signIn,
+  CreateNewUser,
 } from "@/Services/AuthenticationService";
 import type UserModel from "@/common/UserModel";
-import type { User } from "oidc-client";
 
 type Role = {
   name: string;
@@ -16,6 +16,8 @@ export const authStore = defineStore("authStore", {
   state: () => ({
     isAuth: false,
     username: "",
+    email: "",
+    password: "",
     name: "",
     lastName: "",
     currentUserId: Number,
@@ -57,9 +59,17 @@ export const authStore = defineStore("authStore", {
         console.log(usertofind);
       }
     },
-    async authenticate(returnpath: string) {
+    async getUser(returnpath: string) {
       if (!(await authenticate(returnpath))) {
         signIn(returnpath);
+      }
+    },
+    async createUser(user: UserModel) {
+      const success: boolean = await CreateNewUser(user);
+      if (success) {
+        return true;
+      } else {
+        false;
       }
     },
   },
