@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import LoginView from "./views/LoginView.vue";
+import Nav from "@/components/Nav.vue";
 </script>
 
 <template>
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-    <RouterLink to="/login">Login</RouterLink>
-    <RouterLink to="/logout">Logout</RouterLink>
-    <RouterLink to="/create-account">Sign Up</RouterLink>
-    <RouterView></RouterView>
-  </nav>
+  <n-loading-bar-provider>
+    <n-message-provider>
+      <n-notification-provider>
+        <n-dialog-provider>
+          <Nav></Nav>
+        </n-dialog-provider>
+      </n-notification-provider>
+    </n-message-provider>
+  </n-loading-bar-provider>
 </template>
 
 <style>
