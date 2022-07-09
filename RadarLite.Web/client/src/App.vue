@@ -1,18 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import Nav from "@/components/Nav.vue";
+import AppProviderVueVue from "./components/AppProviderVue.vue";
 </script>
 
 <template>
-  <n-loading-bar-provider>
-    <n-message-provider>
-      <n-notification-provider>
-        <n-dialog-provider>
-          <Nav></Nav>
-        </n-dialog-provider>
-      </n-notification-provider>
-    </n-message-provider>
-  </n-loading-bar-provider>
+  <AppProviderVueVue>
+    <Nav></Nav>
+  </AppProviderVueVue>
 </template>
 
 <style>
