@@ -1,4 +1,4 @@
-# RadarLite
+# RadarLite  --ARCHIVED 7/10/2022--
 Fast, interactive radar and weather application; it is far from complete.
 This application is intened to be an ongoing, long term solution to having access to unified weather information quickly. 
 Use your best discretion and feel free to propose any sort of change in the route of a pull request.
