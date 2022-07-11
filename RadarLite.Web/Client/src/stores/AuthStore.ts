@@ -66,11 +66,7 @@ export const authStore = defineStore("authStore", {
     },
     async createUser(user: UserModel) {
       const success: boolean = await CreateNewUser(user);
-      if (success) {
-        return true;
-      } else {
-        false;
-      }
+      return success;
     },
   },
 });
